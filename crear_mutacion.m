@@ -1,5 +1,16 @@
 function [ CM_Cromosoma ] = crear_mutacion( CM_poblacion, CM_cant_objetivos, CM_cant_periodos, CM_cant_lotes)
-
+%===========================================================================
+% Se contruye una función denominada 'crear-mutacion', la cual en
+% escencia está estructurada como la función % -inicializar-cromosomas' 
+% pero enfocada en un único lote. Los parámetros de entrada son 
+% CM_poblacion (población, la cual en este caso es un único individuo),
+% CM_cant_objetivos (cantidad de objetivos a evaluar), CM_cant_periodos (la 
+% cantidad de periodos del horizonte de planeación) y CM_cant_lotes
+% (cantidad de lotes a crear, en este caso, un único lote). Como salida la
+% función presenta un único cromosoma denominado: 'CM_Cromosoma' 
+%===========================================================================
+%%
+%===========================================================================
 load('parametros_maduracion.mat')
 % PPP = Productos Por Periodo
 % MTS = Matriz Tiempos Siembra
@@ -65,6 +76,6 @@ for tiempo=1:1:T-3
         break
     end
 end
-
+%===========================================================================
 end
 
