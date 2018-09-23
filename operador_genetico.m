@@ -6,7 +6,7 @@ function [ Cromosomas_hijos, objetivos_hijos] = operador_genetico( OG_cant_objet
 %     generación de 2 hijos a partir de la mutación en un segmento del
 %     cromosoma de ambos padres. la función genera la solución y el
 %     respectivo valor de las funciones de ajuste.
-
+% 
 % Como el existe la posibilidad de generar nuevos segmentos del cromosoma
 % (cuando se aplica la mutación), es necesario cargar las variables para
 % generar los cromosomas. las variables de entrada del modelo son:
@@ -27,7 +27,7 @@ function [ Cromosomas_hijos, objetivos_hijos] = operador_genetico( OG_cant_objet
 % soluciones generadas a partir de las transformaciones genéticas) y
 % objetivos_hijos (valor de las funciones de ajuste para las soluciones
 % creadas).
-
+% 
 % Las variables de entrada son: poblacion
 % cant_objetivos  cant_periodos cant_productos  cant_lotes  precio_venta
 %  rendimiento

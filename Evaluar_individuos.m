@@ -5,43 +5,43 @@ function [  EI_Cromosomas,EI_Matriz_objetivos ] = Evaluar_individuos(EI_Cromosom
 %===========================================================================
 % Evaluación de las soluciones
 %===========================================================================
-% La función denominada "Evaluar_individuos" toma como parámetros de
-% entrada la población de soluciones y una variable en la cual se
-% almacenarán los resultados de tres funciones: 1) Función de ajuste, 2)
-% Maximizar ingresos y 3) minimizar riesgo financiero del portafolio.
-% Dentro de la función los datos son transformados parcialmente con el
-% propósito de evaluar el cumplimiento de ciertas restricciones y valorar
-% el desempeño de las soluciones.
-%===========================================================================
-% Se construye una variable en la cual se almacenarán tres valores para
-% cada individuo. La primera fila corresponde a la función fitness, la cual
-% es la suma de la penalizaciones relacionadas con el incumplimiento de
-% restricciones y la cantidad de periodos inproductivos del lote: 1)
-% restricciones_tiempo (la cual cuantifica la cantidad de variables en
-% todos los lotes que exceden el horizonte de planeación), 2)
-% restricciones_holgura (cuantifica cuántos periodos por encima o por
-% debajo del horizonte de planeación se encuentra), 3) sobre producción, la
-% cual no se almacena como variable sino cuantifica la cantidad total de
-% kilogramos de productos (por familia de venta) sembrados y recogidos, que
-% no pueden ser vendidos ya que no existe demanda), 4)  rotaciones (cuenta
-% la cantidad de veces que quedaron sembrados de manera seguida dos
-% productos que pertenecen a la misma familia.
-% La segunda fila corresponde al valor de la primera función objetivo
-% (Maximizar ingresos) menos las penalizaciones calculadas en la primera
-% fila. La tercera fila corresponde al valor de la segunda función objetivo
-% (Minimizar riesgo financiero) más la penalización calculada en la fila 1.
+La función denominada "Evaluar_individuos" toma como parámetros de
+entrada la población de soluciones y una variable en la cual se
+almacenarán los resultados de tres funciones: 1) Función de ajuste, 2)
+Maximizar ingresos y 3) minimizar riesgo financiero del portafolio.
+Dentro de la función los datos son transformados parcialmente con el
+propósito de evaluar el cumplimiento de ciertas restricciones y valorar
+el desempeño de las soluciones.
+===========================================================================
+Se construye una variable en la cual se almacenarán tres valores para
+cada individuo. La primera fila corresponde a la función fitness, la cual
+es la suma de la penalizaciones relacionadas con el incumplimiento de
+restricciones y la cantidad de periodos inproductivos del lote: 1)
+restricciones_tiempo (la cual cuantifica la cantidad de variables en
+todos los lotes que exceden el horizonte de planeación), 2)
+restricciones_holgura (cuantifica cuántos periodos por encima o por
+debajo del horizonte de planeación se encuentra), 3) sobre producción, la
+cual no se almacena como variable sino cuantifica la cantidad total de
+kilogramos de productos (por familia de venta) sembrados y recogidos, que
+no pueden ser vendidos ya que no existe demanda), 4)  rotaciones (cuenta
+la cantidad de veces que quedaron sembrados de manera seguida dos
+productos que pertenecen a la misma familia.
+La segunda fila corresponde al valor de la primera función objetivo
+(Maximizar ingresos) menos las penalizaciones calculadas en la primera
+fila. La tercera fila corresponde al valor de la segunda función objetivo
+(Minimizar riesgo financiero) más la penalización calculada en la fila 1.
 
-% Las variables de entrada son: EI_Cromosomas,EI_Matriz_objetivos ,
-% EI_poblacion (tamaño de la población), EI_cant_productos(cantidad de
-% productos a cultivar), EI_cant_lotes (cantidad de lotes a ser cultivados),
-% EI_PMS (Periodo de maduración en semanas), EI_Covkkp (covarianza entre
-% los rendimientos o retornos económicos de cada producto), EI_precio_venta
-% (Precio de venta de cada producto para cada semana), EI_rendimiento
-% (cantidad de kilogramos por metro cuadrado a recoger de cada producto),
-% EI_areas (tamaño en metros cuadrados de cada lote), EI_demanda (Demanda
-% de cada categoría de productos), EI_familia_botanica (Familia botánica a
-% la que pertenece cada producto), EI_familia_venta (Categorías o familia
-% de venta a la cual pertenece cada producto).
+Las variables de entrada son: EI_Cromosomas,EI_Matriz_objetivos ,
+EI_poblacion (tamaño de la población), EI_cant_productos(cantidad de
+productos a cultivar), EI_cant_lotes (cantidad de lotes a ser cultivados),
+EI_PMS (Periodo de maduración en semanas), EI_Covkkp (covarianza entre
+los rendimientos o retornos económicos de cada producto), EI_precio_venta
+(Precio de venta de cada producto para cada semana), EI_rendimiento
+(cantidad de kilogramos por metro cuadrado a recoger de cada producto),
+EI_areas (tamaño en metros cuadrados de cada lote), EI_demanda (Demanda
+de cada categoría de productos), EI_familia_botanica (Familia botánica a
+la que pertenece cada producto), EI_familia_venta (Categorías o familia
+de venta a la cual pertenece cada producto).
 %===========================================================================
 %%
 % Se calcula la cantidad de periodos del proyecto.

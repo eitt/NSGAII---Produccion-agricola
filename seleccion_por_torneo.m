@@ -9,7 +9,7 @@ function [ ST_Cromosomas_padres,ST_criterio_evaluacion_padres,...
 % individuo de menor frente y, 2) el valor de la distancia de
 % apilamiento, en caso de pertenecer al mismo frente, como criterio de
 % selección está el individuo con mayor valor de distancia.
-%
+% 
 % las variables de entrada son ST_Cromosomas (Soluciones a competir), ...
 % ST_Matriz_objetivos (Funciones de ajuste), ST_criterio_evaluacion (
 % la primera fila corresponde al frente al cual pertenece cada solución y

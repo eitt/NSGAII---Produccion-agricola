@@ -1,0 +1,598 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>NSGAII</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-09-22"><meta name="DC.source" content="NSGAII.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#3">NSGAII Introducci&oacute;n</a></li></ul></div><pre class="codeinput"><span class="keyword">function</span> [ Cromosomas, Matriz_objetivos, orden_poblacion ] = NSGAII( poblacion,generaciones )
+</pre><pre class="codeinput"><span class="comment">%===========================================================================</span>
+</pre><h2 id="3">NSGAII Introducci&oacute;n</h2><pre class="codeinput"><span class="comment">%===========================================================================</span>
+<span class="comment">% El NSGAII (Non-dominated Sorting Genetic Algorithm II) es un modelo de</span>
+<span class="comment">% computaci&oacute;n evolutiva multiobjetivo desarrollado por K Deb en 2012. El</span>
+<span class="comment">% c&oacute;digo a continuaci&oacute;n se basa de manera estructural en el propuesto por</span>
+<span class="comment">% Kanpur Genetic % Algorithm Labarotary y kindly, (informaci&oacute;n sobre el</span>
+<span class="comment">% algoritmo original % puede ser consultada en:</span>
+<span class="comment">% http://www.iitk.ac.in/kangal/) y estructurado por Aravind Seshadri,</span>
+<span class="comment">% Copyright (c) 2009. Y presenta como diferencia que la cantidad de</span>
+<span class="comment">% variables de decisi&oacute;n y sus l&iacute;mites inferiores y superiores no son</span>
+<span class="comment">% ingresados manualmente, en vez de ello, la funci&oacute;n denominada</span>
+<span class="comment">% 'funcion_objetivo' es un archivo guia (script) editable para cambiar la</span>
+<span class="comment">% configuraci&oacute;n del modelo (en conjunto con los respectivos archivos .data)</span>
+<span class="comment">% adem&aacute;s, teniendo en cuenta la estructura del modelo, la generaci&oacute;n de</span>
+<span class="comment">% cromosomas y la descodificaci&oacute;n se genera de % manera independiente, es</span>
+<span class="comment">% decir, se crean variables donde se almacena los resultados de las</span>
+<span class="comment">% funciones fitness. Por otra parte la funcion 'operador_genetico' se</span>
+<span class="comment">% desarrolla con un tipo de cruce y mutaci&oacute;n diferente al propuesto por</span>
+<span class="comment">% Kanpur Genetic y, para ello, se proponen otras funciones para generar las</span>
+<span class="comment">% nueva poblaciones.</span>
+
+<span class="comment">% A continuaci&oacute;n se presenta el acuerdo de propiedad intelectual original:</span>
+<span class="comment">% This functions is based on evolutionary algorithm for finding the optimal</span>
+<span class="comment">% solution for multiple objective i.e. pareto front for the objectives.</span>
+<span class="comment">% Initially enter only the population size and the stoping criteria or</span>
+<span class="comment">% the total number of generations after which the algorithm will</span>
+<span class="comment">% automatically stopped.</span>
+<span class="comment">%</span>
+<span class="comment">% You will be asked to enter the number of objective functions, the number</span>
+<span class="comment">% of decision variables and the range space for the decision variables.</span>
+<span class="comment">% Also you will have to define your own objective funciton by editing the</span>
+<span class="comment">% evaluate_objective() function. A sample objective function is described</span>
+<span class="comment">% in evaluate_objective.m. Kindly make sure that the objective function</span>
+<span class="comment">% which you define match the number of objectives that you have entered as</span>
+<span class="comment">% well as the number of decision variables that you have entered. The</span>
+<span class="comment">% decision variable space is continuous for this function, but the</span>
+<span class="comment">% objective space may or may not be continuous.</span>
+<span class="comment">%</span>
+<span class="comment">% Original algorithm NSGA-II was developed by researchers in Kanpur Genetic</span>
+<span class="comment">% Algorithm Labarotary and kindly visit their website for more information</span>
+<span class="comment">% http://www.iitk.ac.in/kangal/</span>
+
+
+<span class="comment">%  Copyright (c) 2009, Aravind Seshadri</span>
+<span class="comment">%  All rights reserved.</span>
+<span class="comment">%</span>
+<span class="comment">%  Redistribution and use in source and binary forms, with or without</span>
+<span class="comment">%  modification, are permitted provided that the following conditions are</span>
+<span class="comment">%  met:</span>
+<span class="comment">%</span>
+<span class="comment">%     * Redistributions of source code must retain the above copyright</span>
+<span class="comment">%       notice, this list of conditions and the following disclaimer.</span>
+<span class="comment">%     * Redistributions in binary form must reproduce the above copyright</span>
+<span class="comment">%       notice, this list of conditions and the following disclaimer in</span>
+<span class="comment">%       the documentation and/or other materials provided with the distribution</span>
+<span class="comment">%</span>
+<span class="comment">%  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"</span>
+<span class="comment">%  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span>
+<span class="comment">%  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</span>
+<span class="comment">%  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE</span>
+<span class="comment">%  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR</span>
+<span class="comment">%  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF</span>
+<span class="comment">%  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS</span>
+<span class="comment">%  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN</span>
+<span class="comment">%  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)</span>
+<span class="comment">%  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE</span>
+<span class="comment">%  POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="comment">%===========================================================================</span>
+<span class="comment">% la funci&oacute;n NSGAII( poblacion,generaciones ) cuenta con dos par&aacute;metros de</span>
+<span class="comment">% entrada. poblacion y generaciones, donde poblacion indica la cantidad de</span>
+<span class="comment">% individuos (cromosomas) permitidos pro cada generacion. La variable</span>
+<span class="comment">% generaciones indica el n&uacute;mero de veces que evolucionar&aacute; la poblacion. Las</span>
+<span class="comment">% vaiables de salida son: Cromosomas (conjunto de individos pertenecientes</span>
+<span class="comment">% a la &uacute;ltima generaci&oacute;n), Matriz_objetivos (valor de las funciones</span>
+<span class="comment">% fitness) y orden_poblacion (ubicaci&oacute;n de cada soluci&oacute;n en el frente de</span>
+<span class="comment">% pareto y su distancia de apilameinto).</span>
+<span class="comment">%===========================================================================</span>
+</pre><pre class="codeinput"><span class="comment">%===========================================================================</span>
+<span class="comment">% Verificaci&oacute;n de par&aacute;metros del modelo</span>
+<span class="comment">%===========================================================================</span>
+<span class="comment">% A continuaci&oacute;n se verifica que los par&aacute;metros de entrada cumplan con</span>
+<span class="comment">% requisitos como tipo de variable y su magnitud.</span>
+<span class="keyword">if</span> nargin &lt; 2
+    error(<span class="string">'NSGA-II: Por favor, Ingrese el tama&ntilde;o de la poblaci&oacute;n y el n&uacute;mero de generaciones como argumentos de entrada.'</span>);
+<span class="keyword">end</span>
+<span class="comment">% Tipo de argumentos (num&eacute;ricos)</span>
+<span class="keyword">if</span> isnumeric(poblacion) == 0 || isnumeric(generaciones) == 0
+    error(<span class="string">'Ambos argumentos de entrada Pobalaci&oacute;n (pop) y N&uacute;mero de generaciones (gen) deben ser de tipo entero'</span>);
+<span class="keyword">end</span>
+<span class="comment">% El tama&ntilde;o m&iacute;nimo de la poblaci&oacute;n debe ser de 20 individuos</span>
+<span class="keyword">if</span> poblacion &lt; 20
+    error(<span class="string">'El tama&ntilde;o m&iacute;nimo de la poblaci&oacute;n debe ser de 20 individuos'</span>);
+<span class="keyword">end</span>
+<span class="comment">% La cantidad m&iacute;nima de generaciones es de 5</span>
+<span class="keyword">if</span> generaciones &lt; 5
+    error(<span class="string">'La cantidad m&iacute;nima de generaciones es de 5'</span>);
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> isinteger(poblacion) == 0 || isinteger(generaciones)==0
+    fprintf(<span class="string">'Los valores deben ser enteros y, por tanto, para evitar errores son redondeados al entero inferior'</span>)
+    <span class="comment">% Verificar que las entradas son enteras, a partir de un redondeo</span>
+    poblacion = round(poblacion);
+    generaciones = round(generaciones);
+<span class="keyword">end</span>
+</pre><pre class="codeoutput error">Error using NSGAII (line 87)
+NSGA-II: Por favor, Ingrese el tama&ntilde;o de la poblaci&oacute;n y el n&uacute;mero de generaciones como argumentos de entrada.
+</pre><pre class="codeinput"><span class="comment">%===========================================================================</span>
+<span class="comment">% Carga de la funci&oacute;n objetivo</span>
+<span class="comment">%===========================================================================</span>
+<span class="comment">% La funci&oacute;n denominada "funcion_objetivo", es un gui&oacute;n editable en el cual</span>
+<span class="comment">% se definen las dos funciones objetivo bajo estudio, as&iacute; mismo, la</span>
+<span class="comment">% cantidad de variables y par&aacute;metros del modelo como: N&uacute;mero de periodos,</span>
+<span class="comment">% cantidad de Lotes, Cantidad de productos, n&uacute;mero de variables de</span>
+<span class="comment">% decisi&oacute;n, cantidad de restricciones, etc. Teniendo en cuenta la</span>
+<span class="comment">% estructura del modelo, los par&aacute;metros son obtenidos a partir de de unos</span>
+<span class="comment">% datos almacenados en un archivo .data Para cambiar caracter&iacute;sticas como</span>
+<span class="comment">% el rendimiento agr&iacute;cola poe lote, el tama&ntilde;o de cada lote, etc. Es</span>
+<span class="comment">% necesario cambiar el conjunto de datos.</span>
+<span class="comment">%===========================================================================</span>
+[ cant_objetivos, cant_variables, <span class="keyword">...</span>
+    cant_periodos ,cant_productos, cant_lotes, precio_venta, <span class="keyword">...</span>
+    rendimiento, areas, demanda,familia_botanica,familia_venta,Covkkp] <span class="keyword">...</span>
+    = funcion_objetivo();
+<span class="comment">%===========================================================================</span>
+</pre><pre class="codeinput"><span class="comment">%===========================================================================</span>
+<span class="comment">% Creaci&oacute;n de los cromosomas iniciales</span>
+<span class="comment">%===========================================================================</span>
+<span class="comment">% La funci&oacute;n denominada "inicializar_cromosomas", tiene como par&aacute;metros de</span>
+<span class="comment">% entrada las caracter&iacute;sticas del modelo aproximado (con unidades de tiempo</span>
+<span class="comment">% basadas en meses en vez de semanas como el modelo exacto) y la cantidad</span>
+<span class="comment">% de individuos que conforman la poblaci&oacute;n. Esta funci&oacute;n carga datos</span>
+<span class="comment">% relacionados con las caracter&iacute;sticas del cromosoma como cantidad de</span>
+<span class="comment">% periodos y restricciones de siembra y dem&aacute;s, retorna los cromosomas y sus</span>
+<span class="comment">% respectivas funciones objetivo. Para cambiar el modelo, es necesario</span>
+<span class="comment">% modificar el archivo .data ya que este indica los periodos de siembra,</span>
+<span class="comment">% duraci&oacute;n del periodo de madurez y otros elementos que caracterizan el</span>
+<span class="comment">% caso de estudio a trabajar.</span>
+<span class="comment">%===========================================================================</span>
+[ Cromosomas,Matriz_objetivos ] = inicializar_cromosomas(poblacion, <span class="keyword">...</span>
+    cant_objetivos, cant_periodos, cant_productos, cant_lotes,precio_venta, <span class="keyword">...</span>
+    rendimiento, areas, demanda,familia_botanica,familia_venta,Covkkp);
+<span class="comment">%===========================================================================</span>
+</pre><pre class="codeinput"><span class="comment">%===========================================================================</span>
+<span class="comment">% Determinar dominancia de la soluci&oacute;n inicial</span>
+<span class="comment">%===========================================================================</span>
+<span class="comment">% Se ordena la poblaci&oacute;n usando ordenar_poblacion. La funci&oacute;n requiere como</span>
+<span class="comment">% par&aacute;metro de entrada las soluciones generadas de manera aleatoria</span>
+<span class="comment">% (cromosomas), el valor de sus funciones objetivo (funciones fitness o de</span>
+<span class="comment">% ajuste) y la cantidad de objetivos. La funci&oacute;n devuelve dos</span>
+<span class="comment">% columnas para cada individuo que son el rango y la distancia de</span>
+<span class="comment">% apilamiento correspondiente a su posici&oacute;n en el frente al que pertenecen.</span>
+<span class="comment">% En este punto el rango y la distancia de apilaci&oacute;n para cada</span>
+<span class="comment">% cromosoma se almacena en una variable extra denominada orden_poblacion.</span>
+<span class="comment">%===========================================================================</span>
+[ Cromosomas, Matriz_objetivos, orden_poblacion ] = <span class="keyword">...</span>
+    ordenar_poblacion( Cromosomas, Matriz_objetivos,cant_objetivos );
+<span class="comment">%===========================================================================</span>
+</pre><pre class="codeinput"><span class="comment">%===========================================================================</span>
+<span class="comment">% Comienza la evoluci&oacute;n de las generaciones</span>
+<span class="comment">%===========================================================================</span>
+<span class="comment">% Se hace un recorrido para todas las generaciones</span>
+<span class="keyword">for</span> gen = 1: generaciones
+    <span class="comment">%     de manera opcional, se grafican los valores de los individuos seg&uacute;n</span>
+    <span class="comment">%     ambas funciones de ajuste</span>
+    scatter(Matriz_objetivos(2,:),Matriz_objetivos(3,:),<span class="string">'filled'</span>)
+    drawnow
+    <span class="comment">% Los padres son seleccionados para la reproducci&oacute;n para generar</span>
+    <span class="comment">% descendencia a partir de un torneo tipo binario basado en en comparar la</span>
+    <span class="comment">% funci&oacute;n fitness (Matriz_objetivo, fila 1), de ah&iacute; se generan lo padres</span>
+    <span class="comment">% para realizar los diversos crices.</span>
+
+    <span class="comment">% se crea la cantidad de grupos a enfrentarse</span>
+    pool = round(poblacion/2);
+    <span class="comment">%     se define el tipo de torneo</span>
+    torneo = 2;
+    <span class="comment">%===========================================================================</span>
+    <span class="comment">%    Selecci&oacute;n de los padres por torneo</span>
+    <span class="comment">%===========================================================================</span>
+    <span class="comment">%     La selecci&oacute;n de los padres de hace de manera aleatoria a partir del</span>
+    <span class="comment">%     conjunto total de soluciones (variable denominada 'Cromosomas'), cada</span>
+    <span class="comment">%     par de padres se enfrenta teniendo en cuenta dos par&aacute;metros: 1) el</span>
+    <span class="comment">%     valor del frente a cual pertenece cada individuo, seleccionando el</span>
+    <span class="comment">%     individuo de menor frente y, 2) el valor de la distancia de</span>
+    <span class="comment">%     apilamiento, en caso de pertenecer al mismo frente, como criterio de</span>
+    <span class="comment">%     selecci&oacute;n est&aacute; el individuo con mayor valor de distancia.</span>
+    <span class="comment">%===========================================================================</span>
+    [Cromosomas_padres ,criterio_evaluacion_padres,objetivos_padres]= <span class="keyword">...</span>
+        seleccion_por_torneo(Cromosomas, Matriz_objetivos, <span class="keyword">...</span>
+        orden_poblacion, pool, torneo);
+    <span class="comment">%===========================================================================</span>
+    <span class="comment">% Se ajusta la probabilidad de mutaci&oacute;n, esto implica que del total de</span>
+    <span class="comment">% modificaciones gen&eacute;ticas un 'probabilidad_mutacion' no se formar&aacute;</span>
+    <span class="comment">% mediante el cruce de padres, en vez de ello, un segmento de su</span>
+    <span class="comment">% informaci&oacute;n gen&eacute;tica (para este caso la producci&oacute;n en un lote al azar) se</span>
+    <span class="comment">% vovler&aacute; a computar</span>
+    probabilidad_mutacion=0.10;
+    <span class="comment">%===========================================================================</span>
+    <span class="comment">%    Creaci&oacute;n de los hijos mediante los operadores gen&eacute;ticos</span>
+    <span class="comment">%===========================================================================</span>
+    <span class="comment">%     la funci&oacute;n 'operador_genetico' crea hijos a partir de los padres</span>
+    <span class="comment">%     seleccionados, para ello existen dos posibildiades: 1) generar dos</span>
+    <span class="comment">%     hijos a partir del cruce -en un &uacute;nico punto- entre dos padres. 2) la</span>
+    <span class="comment">%     generaci&oacute;n de 2 hijos a partir de la mutaci&oacute;n en un segmento del</span>
+    <span class="comment">%     cromosoma de ambos padres. la funci&oacute;n genera la soluci&oacute;n y el</span>
+    <span class="comment">%     respectivo valor de las funciones de ajuste:</span>
+    [Cromosomas_hijos, objetivos_hijos]= operador_genetico( <span class="keyword">...</span>
+        cant_objetivos, cant_periodos, cant_lotes,Cromosomas_padres, <span class="keyword">...</span>
+        probabilidad_mutacion,poblacion,cant_productos,Covkkp,<span class="keyword">...</span>
+        precio_venta,rendimiento,areas,demanda,familia_botanica,<span class="keyword">...</span>
+        familia_venta);
+    <span class="comment">%===========================================================================</span>
+    <span class="comment">% Se crea una poblaci&oacute;n intermedia, conformada por las soluciones padres y</span>
+    <span class="comment">% las soluciones hijas</span>
+    <span class="comment">% Soluciones</span>
+    Cromosomas_intermedios=cat(2,Cromosomas_padres,Cromosomas_hijos);
+    <span class="comment">%     valor de las funciones de ajuste</span>
+    Matriz_objetivos_intermedio=cat(2,objetivos_padres,objetivos_hijos);
+    <span class="comment">%===========================================================================</span>
+    <span class="comment">% Determinar dominancia de la soluci&oacute;n intermedia</span>
+    <span class="comment">%===========================================================================</span>
+    <span class="comment">% Se ordena la poblaci&oacute;n usando ordenar_poblacion. La funci&oacute;n requiere como</span>
+    <span class="comment">% par&aacute;metro de entrada las soluciones generadas de manera aleatoria</span>
+    <span class="comment">% (cromosomas), el valor de sus funciones objetivo (funciones fitness o de</span>
+    <span class="comment">% ajuste) y la cantidad de objetivos. La funci&oacute;n devuelve dos</span>
+    <span class="comment">% columnas para cada individuo que son el rango y la distancia de</span>
+    <span class="comment">% apilamiento correspondiente a su posici&oacute;n en el frente al que pertenecen.</span>
+    <span class="comment">% En este punto el rango y la distancia de apilaci&oacute;n para cada</span>
+    <span class="comment">% cromosoma se almacena en una variable extra denominada orden_poblacion.</span>
+    <span class="comment">%===========================================================================</span>
+    [ Cromosomas_intermedios, Matriz_objetivos_intermedio, <span class="keyword">...</span>
+        orden_poblacion_intermedio ] = ordenar_poblacion(<span class="keyword">...</span>
+        Cromosomas_intermedios, Matriz_objetivos_intermedio,cant_objetivos );
+    <span class="comment">%===========================================================================</span>
+    <span class="comment">% Se organizan las soluciones intermedias seg&uacute;n el frente (de menor a</span>
+    <span class="comment">% mayor) y seg&uacute;n su distancia de apilamiento (de mayor a menor para el caso</span>
+    <span class="comment">% de empatar en frente)</span>
+    <span class="comment">% Se crea una variable auxiliar para almacenar el orden</span>
+    x=orden_poblacion_intermedio';
+    <span class="comment">% Se crea una columna auxiliar con la posici&oacute;n de cada soluci&oacute;n</span>
+    x(:,3)=1:length(x);
+    <span class="comment">% Se ordena la soluci&oacute;n seg&uacute;n frente (columna 1) y seg&uacute;n distancia (columna</span>
+    <span class="comment">% 2)</span>
+    orden=sortrows(x,[1,2],{<span class="string">'ascend'</span>,<span class="string">'descend'</span>});
+    <span class="comment">% Se extrae el orden de las funciones y se almacena en la variable</span>
+    <span class="comment">% 'orden'</span>
+    orden=orden(:,3)';
+    <span class="comment">% Se actualiza la poblaci&oacute;n 'Cromosomas' seg&uacute;n la poblaci&oacute;n intermedia</span>
+    <span class="comment">% 'Cromosomas_intermedios' para las posiciones 'orden' hasta un tama&ntilde;o</span>
+    <span class="comment">% m&aacute;ximo igual a la cantidad de individuos de la poblaci&oacute;n 'poblacion'</span>
+    <span class="keyword">for</span> ajuste=1:length(orden(1:poblacion))
+        Cromosomas(:,(ajuste-1)*cant_lotes+1:(ajuste-1)*cant_lotes+cant_lotes)=<span class="keyword">...</span>
+            Cromosomas_intermedios(:,(orden(ajuste)-1)*cant_lotes+1:(orden(ajuste)-1)*cant_lotes+cant_lotes);
+    <span class="keyword">end</span>
+    <span class="comment">% Se actualiza el valor de las funciones objetivo de la nueva poblaci&oacute;n</span>
+    Matriz_objetivos=Matriz_objetivos_intermedio(:,orden(1:poblacion));
+    orden_poblacion=orden_poblacion_intermedio(:,orden(1:poblacion));
+<span class="keyword">end</span>
+<span class="comment">%===========================================================================</span>
+</pre><pre class="codeinput"><span class="keyword">end</span>
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+function [ Cromosomas, Matriz_objetivos, orden_poblacion ] = NSGAII( poblacion,generaciones )
+%===========================================================================
+%% NSGAII Introducción
+%===========================================================================
+% El NSGAII (Non-dominated Sorting Genetic Algorithm II) es un modelo de
+% computación evolutiva multiobjetivo desarrollado por K Deb en 2012. El
+% código a continuación se basa de manera estructural en el propuesto por
+% Kanpur Genetic % Algorithm Labarotary y kindly, (información sobre el
+% algoritmo original % puede ser consultada en:
+% http://www.iitk.ac.in/kangal/) y estructurado por Aravind Seshadri,
+% Copyright (c) 2009. Y presenta como diferencia que la cantidad de
+% variables de decisión y sus límites inferiores y superiores no son
+% ingresados manualmente, en vez de ello, la función denominada
+% 'funcion_objetivo' es un archivo guia (script) editable para cambiar la
+% configuración del modelo (en conjunto con los respectivos archivos .data)
+% además, teniendo en cuenta la estructura del modelo, la generación de
+% cromosomas y la descodificación se genera de % manera independiente, es
+% decir, se crean variables donde se almacena los resultados de las
+% funciones fitness. Por otra parte la funcion 'operador_genetico' se
+% desarrolla con un tipo de cruce y mutación diferente al propuesto por
+% Kanpur Genetic y, para ello, se proponen otras funciones para generar las
+% nueva poblaciones.
+
+% A continuación se presenta el acuerdo de propiedad intelectual original:
+% This functions is based on evolutionary algorithm for finding the optimal
+% solution for multiple objective i.e. pareto front for the objectives.
+% Initially enter only the population size and the stoping criteria or
+% the total number of generations after which the algorithm will
+% automatically stopped.
+%
+% You will be asked to enter the number of objective functions, the number
+% of decision variables and the range space for the decision variables.
+% Also you will have to define your own objective funciton by editing the
+% evaluate_objective() function. A sample objective function is described
+% in evaluate_objective.m. Kindly make sure that the objective function
+% which you define match the number of objectives that you have entered as
+% well as the number of decision variables that you have entered. The
+% decision variable space is continuous for this function, but the
+% objective space may or may not be continuous.
+%
+% Original algorithm NSGA-II was developed by researchers in Kanpur Genetic
+% Algorithm Labarotary and kindly visit their website for more information
+% http://www.iitk.ac.in/kangal/
+
+
+%  Copyright (c) 2009, Aravind Seshadri
+%  All rights reserved.
+%
+%  Redistribution and use in source and binary forms, with or without
+%  modification, are permitted provided that the following conditions are
+%  met:
+%
+%     * Redistributions of source code must retain the above copyright
+%       notice, this list of conditions and the following disclaimer.
+%     * Redistributions in binary form must reproduce the above copyright
+%       notice, this list of conditions and the following disclaimer in
+%       the documentation and/or other materials provided with the distribution
+%
+%  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+%  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+%  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+%  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+%  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+%  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+%  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+%  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+%  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+%  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+%  POSSIBILITY OF SUCH DAMAGE.
+%===========================================================================
+% la función NSGAII( poblacion,generaciones ) cuenta con dos parámetros de
+% entrada. poblacion y generaciones, donde poblacion indica la cantidad de
+% individuos (cromosomas) permitidos pro cada generacion. La variable
+% generaciones indica el número de veces que evolucionará la poblacion. Las
+% vaiables de salida son: Cromosomas (conjunto de individos pertenecientes
+% a la última generación), Matriz_objetivos (valor de las funciones
+% fitness) y orden_poblacion (ubicación de cada solución en el frente de
+% pareto y su distancia de apilameinto).
+%===========================================================================
+%%
+%===========================================================================
+% Verificación de parámetros del modelo
+%===========================================================================
+% A continuación se verifica que los parámetros de entrada cumplan con
+% requisitos como tipo de variable y su magnitud.
+if nargin < 2
+    error('NSGA-II: Por favor, Ingrese el tamaño de la población y el número de generaciones como argumentos de entrada.');
+end
+% Tipo de argumentos (numéricos)
+if isnumeric(poblacion) == 0 || isnumeric(generaciones) == 0
+    error('Ambos argumentos de entrada Pobalación (pop) y Número de generaciones (gen) deben ser de tipo entero');
+end
+% El tamaño mínimo de la población debe ser de 20 individuos
+if poblacion < 20
+    error('El tamaño mínimo de la población debe ser de 20 individuos');
+end
+% La cantidad mínima de generaciones es de 5
+if generaciones < 5
+    error('La cantidad mínima de generaciones es de 5');
+end
+
+if isinteger(poblacion) == 0 || isinteger(generaciones)==0
+    fprintf('Los valores deben ser enteros y, por tanto, para evitar errores son redondeados al entero inferior')
+    % Verificar que las entradas son enteras, a partir de un redondeo
+    poblacion = round(poblacion);
+    generaciones = round(generaciones);
+end
+%%
+%===========================================================================
+% Carga de la función objetivo
+%===========================================================================
+% La función denominada "funcion_objetivo", es un guión editable en el cual
+% se definen las dos funciones objetivo bajo estudio, así mismo, la
+% cantidad de variables y parámetros del modelo como: Número de periodos,
+% cantidad de Lotes, Cantidad de productos, número de variables de
+% decisión, cantidad de restricciones, etc. Teniendo en cuenta la
+% estructura del modelo, los parámetros son obtenidos a partir de de unos
+% datos almacenados en un archivo .data Para cambiar características como
+% el rendimiento agrícola poe lote, el tamaño de cada lote, etc. Es
+% necesario cambiar el conjunto de datos.
+%===========================================================================
+[ cant_objetivos, cant_variables, ...
+    cant_periodos ,cant_productos, cant_lotes, precio_venta, ...
+    rendimiento, areas, demanda,familia_botanica,familia_venta,Covkkp] ...
+    = funcion_objetivo();
+%===========================================================================
+%%
+%===========================================================================
+% Creación de los cromosomas iniciales
+%===========================================================================
+% La función denominada "inicializar_cromosomas", tiene como parámetros de
+% entrada las características del modelo aproximado (con unidades de tiempo
+% basadas en meses en vez de semanas como el modelo exacto) y la cantidad
+% de individuos que conforman la población. Esta función carga datos
+% relacionados con las características del cromosoma como cantidad de
+% periodos y restricciones de siembra y demás, retorna los cromosomas y sus
+% respectivas funciones objetivo. Para cambiar el modelo, es necesario
+% modificar el archivo .data ya que este indica los periodos de siembra,
+% duración del periodo de madurez y otros elementos que caracterizan el
+% caso de estudio a trabajar.
+%===========================================================================
+[ Cromosomas,Matriz_objetivos ] = inicializar_cromosomas(poblacion, ...
+    cant_objetivos, cant_periodos, cant_productos, cant_lotes,precio_venta, ...
+    rendimiento, areas, demanda,familia_botanica,familia_venta,Covkkp);
+%===========================================================================
+%%
+%===========================================================================
+% Determinar dominancia de la solución inicial
+%===========================================================================
+% Se ordena la población usando ordenar_poblacion. La función requiere como
+% parámetro de entrada las soluciones generadas de manera aleatoria
+% (cromosomas), el valor de sus funciones objetivo (funciones fitness o de
+% ajuste) y la cantidad de objetivos. La función devuelve dos
+% columnas para cada individuo que son el rango y la distancia de
+% apilamiento correspondiente a su posición en el frente al que pertenecen.
+% En este punto el rango y la distancia de apilación para cada
+% cromosoma se almacena en una variable extra denominada orden_poblacion.
+%===========================================================================
+[ Cromosomas, Matriz_objetivos, orden_poblacion ] = ...
+    ordenar_poblacion( Cromosomas, Matriz_objetivos,cant_objetivos );
+%===========================================================================
+%%
+%===========================================================================
+% Comienza la evolución de las generaciones
+%===========================================================================
+% Se hace un recorrido para todas las generaciones
+for gen = 1: generaciones
+    %     de manera opcional, se grafican los valores de los individuos según
+    %     ambas funciones de ajuste
+    scatter(Matriz_objetivos(2,:),Matriz_objetivos(3,:),'filled')
+    drawnow
+    % Los padres son seleccionados para la reproducción para generar
+    % descendencia a partir de un torneo tipo binario basado en en comparar la
+    % función fitness (Matriz_objetivo, fila 1), de ahí se generan lo padres
+    % para realizar los diversos crices.
+    
+    % se crea la cantidad de grupos a enfrentarse
+    pool = round(poblacion/2);
+    %     se define el tipo de torneo
+    torneo = 2;
+    %===========================================================================
+    %    Selección de los padres por torneo
+    %===========================================================================
+    %     La selección de los padres de hace de manera aleatoria a partir del
+    %     conjunto total de soluciones (variable denominada 'Cromosomas'), cada
+    %     par de padres se enfrenta teniendo en cuenta dos parámetros: 1) el
+    %     valor del frente a cual pertenece cada individuo, seleccionando el
+    %     individuo de menor frente y, 2) el valor de la distancia de
+    %     apilamiento, en caso de pertenecer al mismo frente, como criterio de
+    %     selección está el individuo con mayor valor de distancia.
+    %===========================================================================
+    [Cromosomas_padres ,criterio_evaluacion_padres,objetivos_padres]= ...
+        seleccion_por_torneo(Cromosomas, Matriz_objetivos, ...
+        orden_poblacion, pool, torneo);
+    %===========================================================================
+    % Se ajusta la probabilidad de mutación, esto implica que del total de
+    % modificaciones genéticas un 'probabilidad_mutacion' no se formará
+    % mediante el cruce de padres, en vez de ello, un segmento de su
+    % información genética (para este caso la producción en un lote al azar) se
+    % vovlerá a computar
+    probabilidad_mutacion=0.10;
+    %===========================================================================
+    %    Creación de los hijos mediante los operadores genéticos
+    %===========================================================================
+    %     la función 'operador_genetico' crea hijos a partir de los padres
+    %     seleccionados, para ello existen dos posibildiades: 1) generar dos
+    %     hijos a partir del cruce -en un único punto- entre dos padres. 2) la
+    %     generación de 2 hijos a partir de la mutación en un segmento del
+    %     cromosoma de ambos padres. la función genera la solución y el
+    %     respectivo valor de las funciones de ajuste:
+    [Cromosomas_hijos, objetivos_hijos]= operador_genetico( ...
+        cant_objetivos, cant_periodos, cant_lotes,Cromosomas_padres, ...
+        probabilidad_mutacion,poblacion,cant_productos,Covkkp,...
+        precio_venta,rendimiento,areas,demanda,familia_botanica,...
+        familia_venta);
+    %===========================================================================
+    % Se crea una población intermedia, conformada por las soluciones padres y
+    % las soluciones hijas
+    % Soluciones
+    Cromosomas_intermedios=cat(2,Cromosomas_padres,Cromosomas_hijos);
+    %     valor de las funciones de ajuste
+    Matriz_objetivos_intermedio=cat(2,objetivos_padres,objetivos_hijos);
+    %===========================================================================
+    % Determinar dominancia de la solución intermedia
+    %===========================================================================
+    % Se ordena la población usando ordenar_poblacion. La función requiere como
+    % parámetro de entrada las soluciones generadas de manera aleatoria
+    % (cromosomas), el valor de sus funciones objetivo (funciones fitness o de
+    % ajuste) y la cantidad de objetivos. La función devuelve dos
+    % columnas para cada individuo que son el rango y la distancia de
+    % apilamiento correspondiente a su posición en el frente al que pertenecen.
+    % En este punto el rango y la distancia de apilación para cada
+    % cromosoma se almacena en una variable extra denominada orden_poblacion.
+    %===========================================================================
+    [ Cromosomas_intermedios, Matriz_objetivos_intermedio, ...
+        orden_poblacion_intermedio ] = ordenar_poblacion(...
+        Cromosomas_intermedios, Matriz_objetivos_intermedio,cant_objetivos );
+    %===========================================================================
+    % Se organizan las soluciones intermedias según el frente (de menor a
+    % mayor) y según su distancia de apilamiento (de mayor a menor para el caso
+    % de empatar en frente)
+    % Se crea una variable auxiliar para almacenar el orden
+    x=orden_poblacion_intermedio';
+    % Se crea una columna auxiliar con la posición de cada solución
+    x(:,3)=1:length(x);
+    % Se ordena la solución según frente (columna 1) y según distancia (columna
+    % 2)
+    orden=sortrows(x,[1,2],{'ascend','descend'});
+    % Se extrae el orden de las funciones y se almacena en la variable
+    % 'orden'
+    orden=orden(:,3)';
+    % Se actualiza la población 'Cromosomas' según la población intermedia
+    % 'Cromosomas_intermedios' para las posiciones 'orden' hasta un tamaño
+    % máximo igual a la cantidad de individuos de la población 'poblacion'
+    for ajuste=1:length(orden(1:poblacion))
+        Cromosomas(:,(ajuste-1)*cant_lotes+1:(ajuste-1)*cant_lotes+cant_lotes)=...
+            Cromosomas_intermedios(:,(orden(ajuste)-1)*cant_lotes+1:(orden(ajuste)-1)*cant_lotes+cant_lotes);
+    end
+    % Se actualiza el valor de las funciones objetivo de la nueva población
+    Matriz_objetivos=Matriz_objetivos_intermedio(:,orden(1:poblacion));
+    orden_poblacion=orden_poblacion_intermedio(:,orden(1:poblacion));
+end
+%===========================================================================
+end
+
+
+##### SOURCE END #####
+--></body></html>

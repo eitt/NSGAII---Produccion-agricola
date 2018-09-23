@@ -1,0 +1,1498 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{NSGAII}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{algoritmo-nsgaii-para-resolver-el-problema-de-de-optimizaciuxf3n-multiobjetivo-que-determina-portafolios-de-cultivos-en-la-producciuxf3n-agruxedcola-a-pequeuxf1a-escala}{%
+\section{Algoritmo NSGAII para resolver el problema de de optimización
+multiobjetivo que determina portafolios de cultivos en la producción
+agrícola a pequeña
+escala}\label{algoritmo-nsgaii-para-resolver-el-problema-de-de-optimizaciuxf3n-multiobjetivo-que-determina-portafolios-de-cultivos-en-la-producciuxf3n-agruxedcola-a-pequeuxf1a-escala}}
+
+el Algoritmo Genético Elitista de Ordenamiento No-dominado de segunda
+generación (\emph{Nondominated Sorting in Genetic Algorithms type II,
+NSGA-II}) desarrollado por Deh y otros (2002). El algoritmo es de
+carácter poblacional puesto que genera un conjunto se soluciones
+aleatorias \(P\) en el instante \(t\) y, mediante operaciones (en este
+caso, el cruce y mutación de los algoritmos genéticos convencionales),
+genera una segunda población. La población de hijos \(Q\) tiene el mismo
+tamaño de la población \(P\). La suma de ambos conjuntos conforman la
+población \(R\), con tamaño \(2*N\). Una vez creado el conjunto \(R\) se
+procede organizar las soluciones que lo conforman originales (padres) y
+aquellas derivadas de los operadores genéticos (hijos). Para esto se
+compara la dominancia y pertenencia a los distintos frentes de Pareto
+(Srinivas \& Deb, 1994), en conjunto con la distancia de apilamiento, la
+cual evalúa las potenciales mejores soluciones en un mismo frente (Deb
+et al., 2002). Una vez organizados los individuos, se seleccionan los
+\(N\) mejores, de tal forma que la población final es del tamaño
+original de los padres, es decir, se genera un nuevo conjunto: \(P_t+1\)
+. El proceso de generación de individuos se realiza durante \(g\)
+generaciones.
+
+El algoritmo utilziado es programado en MATLAB 2017b y está dividido en
+8 funciones que se ejecutan de acuerdo a la siguiente imagen:
+
+    \hypertarget{algoritmo-base-nsgaii-nsgaii.m}{%
+\subsection{Algoritmo base (NSGAII)
+(NSGAII.m)}\label{algoritmo-base-nsgaii-nsgaii.m}}
+
+El NSGAII (Non-dominated Sorting Genetic Algorithm II) es un algoritmo
+de computación evolutiva multiobjetivo desarrollado por K Deb en 2012.
+El código a continuación se basa de manera estructural (e.g.~el orden de
+algunas funciones, el tipo de torneo, la generación de los frentes de
+Pareto y el cálculo de la distancia de apilamiento) en el propuesto por
+Kanpur Genetic Algorithm Labaratory y kindly, (información sobre el
+algoritmo original puede ser consultada en:
+http://www.iitk.ac.in/kangal/) y estructurado por Aravind Seshadri,
+Copyright (c) 2009. El algortimo desarrollado presenta diversas
+diferencias como: la estructura de variables de decisión ya que sus
+límites inferiores y superiores no son ingresados manualmente, en vez de
+ello, la función denominada `funcion\_objetivo' es un archivo guia
+(\emph{script}) editable para cambiar la configuración del modelo (en
+conjunto con los respectivos archivos \emph{.data}) además, teniendo en
+cuenta la estructura del problema, la generación de cromosomas y la
+descodificación se genera de manera independiente, es decir, se crean
+variables donde se almacena los resultados de las funciones
+\emph{fitness}. Por otra parte la funcion `operador\_genetico' se
+desarrolla con un tipo de cruce y mutación diferente al propuesto por
+Kanpur Genetic y, para ello, se proponen otras funciones para generar
+las nueva poblaciones, entre otras.
+
+A continuación se presenta el acuerdo de propiedad intelectual original:
+
+Original algorithm NSGA-II was developed by researchers in Kanpur
+Genetic Algorithm Labarotary and kindly visit their website for more
+information http://www.iitk.ac.in/kangal/
+
+Copyright (c) 2009, Aravind Seshadri All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met: * Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer. *
+Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS
+IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{function}\PY{+w}{ }[Cromosomas, Matriz\PYZus{}objetivos, orden\PYZus{}poblacion] ...
+        \PY{p}{=}\PY{+w}{ }\PY{n+nf}{NSGAII}\PY{p}{(} poblacion,generaciones \PY{p}{)}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{la función NSGAII( poblacion,generaciones ) cuenta con dos parámetros de}
+        \PY{c+cm}{entrada. poblacion y generaciones, donde poblacion indica la cantidad de}
+        \PY{c+cm}{individuos (cromosomas) permitidos pro cada generacion. La variable}
+        \PY{c+cm}{generaciones indica el número de veces que evolucionará la poblacion. Las}
+        \PY{c+cm}{vaiables de salida son: Cromosomas (conjunto de individos pertenecientes}
+        \PY{c+cm}{a la última generación), Matriz\PYZus{}objetivos (valor de las funciones}
+        \PY{c+cm}{fitness) y orden\PYZus{}poblacion (ubicación de cada solución en el frente de}
+        \PY{c+cm}{pareto y su distancia de apilameinto).}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}
+        
+        \PY{c}{\PYZpc{} Verificación de parámetros del modelo}
+        
+        \PY{c}{\PYZpc{}A continuación se verifica que los parámetros de entrada cumplan con}
+        \PY{c}{\PYZpc{}requisitos como tipo de variable y su magnitud.}
+        \PY{k}{if} \PY{n}{nargin} \PY{o}{\PYZlt{}} \PY{l+m+mi}{2}
+        \PY{n}{error}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{NSGA\PYZhy{}II: Por favor, Ingrese el tamaño de la población y el número de generaciones como argumentos de entrada.\PYZsq{}}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{c}{\PYZpc{} Tipo de argumentos (numéricos)}
+        \PY{k}{if} \PY{n}{isnumeric}\PY{p}{(}\PY{n}{poblacion}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{0} \PY{o}{||} \PY{n}{isnumeric}\PY{p}{(}\PY{n}{generaciones}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{0}
+        \PY{n}{error}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{Ambos argumentos de entrada Pobalación (pop) y Número de generaciones (gen) deben ser de tipo entero\PYZsq{}}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{c}{\PYZpc{} El tamaño mínimo de la población debe ser de 20 individuos}
+        \PY{k}{if} \PY{n}{poblacion} \PY{o}{\PYZlt{}} \PY{l+m+mi}{20}
+        \PY{n}{error}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{El tamaño mínimo de la población debe ser de 20 individuos\PYZsq{}}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{c}{\PYZpc{} La cantidad mínima de generaciones es de 5}
+        \PY{k}{if} \PY{n}{generaciones} \PY{o}{\PYZlt{}} \PY{l+m+mi}{5}
+        \PY{n}{error}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{La cantidad mínima de generaciones es de 5\PYZsq{}}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        
+        \PY{k}{if} \PY{n}{isinteger}\PY{p}{(}\PY{n}{poblacion}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{0} \PY{o}{||} \PY{n}{isinteger}\PY{p}{(}\PY{n}{generaciones}\PY{p}{)}\PY{o}{==}\PY{l+m+mi}{0}
+        \PY{n}{fprintf}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{Los valores deben ser enteros y, por tanto, para evitar errores son redondeados al entero inferior\PYZsq{}}\PY{p}{)}
+        \PY{c}{\PYZpc{} Verificar que las entradas son enteras, a partir de un redondeo}
+        \PY{n}{poblacion} \PY{p}{=} \PY{n+nb}{round}\PY{p}{(}\PY{n}{poblacion}\PY{p}{)}\PY{p}{;}
+        \PY{n}{generaciones} \PY{p}{=} \PY{n+nb}{round}\PY{p}{(}\PY{n}{generaciones}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        
+        \PY{c}{\PYZpc{} Carga de la función objetivo}
+        \PY{p}{[} \PY{n}{cant\PYZus{}objetivos}\PY{p}{,} \PY{n}{cant\PYZus{}variables}\PY{p}{,} \PY{c}{...}
+        \PY{n}{cant\PYZus{}periodos} \PY{p}{,}\PY{n}{cant\PYZus{}productos}\PY{p}{,} \PY{n}{cant\PYZus{}lotes}\PY{p}{,} \PY{n}{precio\PYZus{}venta}\PY{p}{,} \PY{c}{...}
+        \PY{n}{rendimiento}\PY{p}{,} \PY{n}{areas}\PY{p}{,} \PY{n}{demanda}\PY{p}{,}\PY{n}{familia\PYZus{}botanica}\PY{p}{,}\PY{n}{familia\PYZus{}venta}\PY{p}{,}\PY{n}{Covkkp}\PY{p}{]} \PY{c}{...}
+        \PY{p}{=} \PY{n}{funcion\PYZus{}objetivo}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+        
+        \PY{c}{\PYZpc{} Creación de los cromosomas iniciales}
+        \PY{p}{[} \PY{n}{Cromosomas}\PY{p}{,}\PY{n}{Matriz\PYZus{}objetivos} \PY{p}{]} \PY{p}{=} \PY{n}{inicializar\PYZus{}cromosomas}\PY{p}{(}\PY{n}{poblacion}\PY{p}{,} \PY{c}{...}
+        \PY{n}{cant\PYZus{}objetivos}\PY{p}{,} \PY{n}{cant\PYZus{}periodos}\PY{p}{,} \PY{n}{cant\PYZus{}productos}\PY{p}{,} \PY{n}{cant\PYZus{}lotes}\PY{p}{,}\PY{n}{precio\PYZus{}venta}\PY{p}{,} \PY{c}{...}
+        \PY{n}{rendimiento}\PY{p}{,} \PY{n}{areas}\PY{p}{,} \PY{n}{demanda}\PY{p}{,}\PY{n}{familia\PYZus{}botanica}\PY{p}{,}\PY{n}{familia\PYZus{}venta}\PY{p}{,}\PY{n}{Covkkp}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Determinar dominancia de la solución inicial}
+        \PY{p}{[} \PY{n}{Cromosomas}\PY{p}{,} \PY{n}{Matriz\PYZus{}objetivos}\PY{p}{,} \PY{n}{orden\PYZus{}poblacion} \PY{p}{]} \PY{p}{=} \PY{c}{...}
+        \PY{n}{ordenar\PYZus{}poblacion}\PY{p}{(} \PY{n}{Cromosomas}\PY{p}{,} \PY{n}{Matriz\PYZus{}objetivos}\PY{p}{,}\PY{n}{cant\PYZus{}objetivos} \PY{p}{)}\PY{p}{;}
+        
+        \PY{c}{\PYZpc{} Comienza la evolución de las generaciones}
+        
+        \PY{k}{for} \PY{n}{gen} \PY{p}{=} \PY{l+m+mi}{1}\PY{p}{:} \PY{n}{generaciones}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{Los padres son seleccionados para la reproducción para generar}
+        \PY{c+cm}{descendencia a partir de un torneo tipo binario basado en en comparar la}
+        \PY{c+cm}{función fitness (Matriz\PYZus{}objetivo, fila 1), de ahí se generan lo padres}
+        \PY{c+cm}{para realizar los diversos crices.}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}
+        \PY{c}{\PYZpc{} se crea la cantidad de grupos a enfrentarse}
+        \PY{n}{pool} \PY{p}{=} \PY{n+nb}{round}\PY{p}{(}\PY{n}{poblacion}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}     se define el tipo de torneo}
+        \PY{n}{torneo} \PY{p}{=} \PY{l+m+mi}{2}\PY{p}{;}
+        \PY{c}{\PYZpc{}    Selección de los padres por torneo}
+        \PY{p}{[}\PY{n}{Cromosomas\PYZus{}padres} \PY{p}{,}\PY{n}{criterio\PYZus{}evaluacion\PYZus{}padres}\PY{p}{,}\PY{n}{objetivos\PYZus{}padres}\PY{p}{]}\PY{p}{=} \PY{c}{...}
+        \PY{n}{seleccion\PYZus{}por\PYZus{}torneo}\PY{p}{(}\PY{n}{Cromosomas}\PY{p}{,} \PY{n}{Matriz\PYZus{}objetivos}\PY{p}{,} \PY{c}{...}
+        \PY{n}{orden\PYZus{}poblacion}\PY{p}{,} \PY{n}{pool}\PY{p}{,} \PY{n}{torneo}\PY{p}{)}\PY{p}{;}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{Se ajusta la probabilidad de mutación, esto implica que del total de}
+        \PY{c+cm}{modificaciones genéticas un \PYZsq{}probabilidad\PYZus{}mutacion\PYZsq{} no se formará}
+        \PY{c+cm}{mediante el cruce de padres, en vez de ello, un segmento de su}
+        \PY{c+cm}{información genética (para este caso la producción en un lote al azar) se}
+        \PY{c+cm}{volverá a computar}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}
+        \PY{n}{probabilidad\PYZus{}mutacion}\PY{p}{=}\PY{l+m+mf}{0.10}\PY{p}{;}
+        \PY{c}{\PYZpc{}    Creación de los hijos mediante los operadores genéticos}
+        
+        \PY{p}{[}\PY{n}{Cromosomas\PYZus{}hijos}\PY{p}{,} \PY{n}{objetivos\PYZus{}hijos}\PY{p}{]}\PY{p}{=} \PY{n}{operador\PYZus{}genetico}\PY{p}{(} \PY{c}{...}
+        \PY{n}{cant\PYZus{}objetivos}\PY{p}{,} \PY{n}{cant\PYZus{}periodos}\PY{p}{,} \PY{n}{cant\PYZus{}lotes}\PY{p}{,}\PY{n}{Cromosomas\PYZus{}padres}\PY{p}{,} \PY{c}{...}
+        \PY{n}{probabilidad\PYZus{}mutacion}\PY{p}{,}\PY{n}{poblacion}\PY{p}{,}\PY{n}{cant\PYZus{}productos}\PY{p}{,}\PY{n}{Covkkp}\PY{p}{,}\PY{c}{...}
+        \PY{n}{precio\PYZus{}venta}\PY{p}{,}\PY{n}{rendimiento}\PY{p}{,}\PY{n}{areas}\PY{p}{,}\PY{n}{demanda}\PY{p}{,}\PY{n}{familia\PYZus{}botanica}\PY{p}{,}\PY{c}{...}
+        \PY{n}{familia\PYZus{}venta}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se crea una población intermedia, conformada por las soluciones padres las soluciones hijas}
+        \PY{c}{\PYZpc{} Soluciones}
+        \PY{n}{Cromosomas\PYZus{}intermedios}\PY{p}{=}\PY{n+nb}{cat}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{Cromosomas\PYZus{}padres}\PY{p}{,}\PY{n}{Cromosomas\PYZus{}hijos}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}     valor de las funciones de ajuste}
+        \PY{n}{Matriz\PYZus{}objetivos\PYZus{}intermedio}\PY{p}{=}\PY{n+nb}{cat}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{objetivos\PYZus{}padres}\PY{p}{,}\PY{n}{objetivos\PYZus{}hijos}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Determinar dominancia de la solución intermedia}
+        \PY{p}{[} \PY{n}{Cromosomas\PYZus{}intermedios}\PY{p}{,} \PY{n}{Matriz\PYZus{}objetivos\PYZus{}intermedio}\PY{p}{,} \PY{c}{...}
+        \PY{n}{orden\PYZus{}poblacion\PYZus{}intermedio} \PY{p}{]} \PY{p}{=} \PY{n}{ordenar\PYZus{}poblacion}\PY{p}{(}\PY{c}{...}
+        \PY{n}{Cromosomas\PYZus{}intermedios}\PY{p}{,} \PY{n}{Matriz\PYZus{}objetivos\PYZus{}intermedio}\PY{p}{,}\PY{n}{cant\PYZus{}objetivos} \PY{p}{)}\PY{p}{;}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{Se organizan las soluciones intermedias según el frente (de menor a}
+        \PY{c+cm}{mayor) y según su distancia de apilamiento (de mayor a menor para el caso}
+        \PY{c+cm}{de empatar en frente)}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}
+        \PY{c}{\PYZpc{}Se crea una variable auxiliar para almacenar el orden}
+        \PY{n}{x}\PY{p}{=}\PY{n}{orden\PYZus{}poblacion\PYZus{}intermedio}\PY{o}{\PYZsq{}}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se crea una columna auxiliar con la posición de cada solución}
+        \PY{n}{x}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{length}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se ordena la solución según frente (columna 1) y según distancia (columna}
+        \PY{c}{\PYZpc{} 2)}
+        \PY{n}{orden}\PY{p}{=}\PY{n}{sortrows}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,}\PY{p}{\PYZob{}}\PY{l+s}{\PYZsq{}}\PY{l+s}{ascend\PYZsq{}}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{descend\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se extrae el orden de las funciones y se almacena en la variable}
+        \PY{c}{\PYZpc{} \PYZsq{}orden\PYZsq{}}
+        \PY{n}{orden}\PY{p}{=}\PY{n}{orden}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{p}{;}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{Se actualiza la población \PYZsq{}Cromosomas\PYZsq{} según la población intermedia}
+        \PY{c+cm}{\PYZsq{}Cromosomas\PYZus{}intermedios\PYZsq{} para las posiciones \PYZsq{}orden\PYZsq{} hasta un tamaño}
+        \PY{c+cm}{máximo igual a la cantidad de individuos de la población \PYZsq{}poblacion\PYZsq{}}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}
+        
+        \PY{k}{for} \PY{n}{ajuste}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{length}\PY{p}{(}\PY{n}{orden}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{poblacion}\PY{p}{)}\PY{p}{)}
+        \PY{n}{Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{p}{(}\PY{n}{ajuste}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{cant\PYZus{}lotes}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{ajuste}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{cant\PYZus{}lotes}\PY{o}{+}\PY{n}{cant\PYZus{}lotes}\PY{p}{)}\PY{p}{=}\PY{c}{...}
+        \PY{n}{Cromosomas\PYZus{}intermedios}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{p}{(}\PY{n}{orden}\PY{p}{(}\PY{n}{ajuste}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{cant\PYZus{}lotes}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{c}{...}
+        \PY{p}{(}\PY{n}{orden}\PY{p}{(}\PY{n}{ajuste}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{cant\PYZus{}lotes}\PY{o}{+}\PY{n}{cant\PYZus{}lotes}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{c}{\PYZpc{} Se actualiza el valor de las funciones objetivo de la nueva población}
+        \PY{n}{Matriz\PYZus{}objetivos}\PY{p}{=}\PY{n}{Matriz\PYZus{}objetivos\PYZus{}intermedio}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{orden}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{poblacion}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{n}{orden\PYZus{}poblacion}\PY{p}{=}\PY{n}{orden\PYZus{}poblacion\PYZus{}intermedio}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{orden}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{poblacion}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        
+        \PY{k}{end}
+        \PY{k}{end}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\textcolor{ansi-red-intense}{\textbf{Error: Function definitions are not permitted in this context.
+
+}}
+    \end{Verbatim}
+
+    \hypertarget{algoritmo-para-definir-paruxe1metros-del-modelo-funcion_objetivo}{%
+\subsection{Algoritmo para definir parámetros del modelo
+(funcion\_objetivo)}\label{algoritmo-para-definir-paruxe1metros-del-modelo-funcion_objetivo}}
+
+La función denominada ``funcion\_objetivo'', es un guión editable en el
+cual se definen las dos funciones objetivo bajo estudio, así mismo, la
+cantidad de variables y parámetros del modelo como: Número de periodos,
+cantidad de Lotes, Cantidad de productos, número de variables de
+decisión, cantidad de restricciones, etc. Teniendo en cuenta la
+estructura del modelo, los parámetros son obtenidos a partir de de unos
+datos almacenados en un archivo .data Para cambiar características como
+el rendimiento agrícola por lote, el tamaño de cada lote, etc. Es
+necesario cambiar el conjunto de datos.
+
+Los datos de salida de la función son: FO\_cant\_objetivos (Cantidad de
+objetivos), FO\_cant\_variables (Cantidad de
+variables),FO\_cant\_periodos (Cantidad de periodos en el horizonte de
+planeación),FO\_cant\_productos (cantidad de productos a cultivar y
+recoger), FO\_cant\_lotes (cantidad de lotes a cultivar),
+FO\_precio\_venta (precio de venta de cada producto en el horizonte de
+planeación), FO\_rendimiento (Cantidad de kilogramos de cada producto a
+recoger en cada lote), FO\_areas (tamaño en metros cuadrados de cada
+lote), FO\_demanda (Demanda de cada familia de productos),
+FO\_familia\_botanica (Familia botánica a la cual pertenece cada
+producto),FO\_familia\_venta (Familia de productos sustitutos para
+satisfacer la demanda)y FO\_Covkkp (covarianza de los rendimientos
+económicos de cada producto).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{function}\PY{err}{ }\PY{err}{[}\PY{n+nf}{FO\PYZus{}cant\PYZus{}objetivos}\PY{p}{,} \PY{n}{FO\PYZus{}cant\PYZus{}variables}\PY{p}{,}  \PY{c}{...}
+        \PY{n}{FO\PYZus{}cant\PYZus{}periodos} \PY{p}{,}\PY{n}{FO\PYZus{}cant\PYZus{}productos}\PY{p}{,} \PY{n}{FO\PYZus{}cant\PYZus{}lotes}\PY{p}{,} \PY{n}{FO\PYZus{}precio\PYZus{}venta}\PY{p}{,} \PY{c}{...}
+        \PY{n}{FO\PYZus{}rendimiento}\PY{p}{,} \PY{n}{FO\PYZus{}areas}\PY{p}{,} \PY{n}{FO\PYZus{}demanda}\PY{p}{,}\PY{n}{FO\PYZus{}familia\PYZus{}botanica}\PY{p}{,}\PY{c}{...}
+        \PY{n}{FO\PYZus{}familia\PYZus{}venta}\PY{p}{,}\PY{n}{FO\PYZus{}Covkkp}\PY{p}{]} \PY{p}{=} \PY{n}{funcion\PYZus{}objetivo}\PY{p}{(}\PY{p}{)}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{Se cargan las características generales del problema a atender: 7039}
+        \PY{c+cm}{Lotes, 21 Productos, 96 semanas para el horizonte de planeación, 5}
+        \PY{c+cm}{familias botánicas, 4 categorías de producto de venta, La demanda para }
+        \PY{c+cm}{cada categoría de venta, durante el horizonte de planeación.}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}
+        \PY{n}{load}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{productos\PYZus{}parametros\PYZsq{}}\PY{p}{)}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{Conjunto\PYZus{}s: Vector con los instantes donde puede sembrarse cada producto.}
+        \PY{c+cm}{q:          Familia botánica a la que pertenece cada producto.}
+        \PY{c+cm}{Ni:         Número de periodos que se demora el producto k en \PYZdq{}Madurar\PYZdq{}.}
+        \PY{c+cm}{Pkt:        Precio de venta del producto K en el instante t}
+        \PY{c+cm}{Rkl:        Rendimiento en Kg/m2 de cada producto (col) por lote (fil)}
+        \PY{c+cm}{Al:         Área en metros de cada lote}
+        \PY{c+cm}{Gv          Grupo de productos sustitutos para satisfacer una demanda}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}
+        \PY{c}{\PYZpc{} Se calcula la cantidad de periodos del cromosoma (en mes)}
+        \PY{n}{T}\PY{p}{=}\PY{n+nb}{length}\PY{p}{(}\PY{n}{Conjunto\PYZus{}s}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{4}\PY{p}{;}
+        \PY{c}{\PYZpc{} Cantidad de productos}
+        \PY{n}{K}\PY{p}{=}\PY{n+nb}{length}\PY{p}{(}\PY{n}{Ni}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Cantidad de lotes para cada caso de prueba se trabajará con L lotes}
+        \PY{n}{L}\PY{p}{=}\PY{l+m+mi}{40}\PY{p}{;}
+        \PY{c}{\PYZpc{} Selecciono al azar L lotes}
+        \PY{n}{lotes}\PY{p}{=}\PY{n}{datasample}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{length}\PY{p}{(}\PY{n}{Rkl}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{,}\PY{n}{L}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{Replace\PYZsq{}}\PY{p}{,}\PY{n}{false}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Actualizo los rendimientos para los dos lotes seleccionados}
+        \PY{n}{Rkl}\PY{p}{=}\PY{n}{Rkl}\PY{p}{(}\PY{n}{lotes}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Calculo el área de los dos lotes}
+        \PY{n}{Al}\PY{p}{=}\PY{n}{Al}\PY{p}{(}\PY{n}{lotes}\PY{o}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+        
+        \PY{c}{\PYZpc{} Se estima la matriz de Covarianza de los precios;}
+        \PY{n}{Covkkp}\PY{p}{=}\PY{n}{cov}\PY{p}{(}\PY{n}{diff}\PY{p}{(}\PY{n+nb}{log}\PY{p}{(}\PY{n}{Pkt}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Determinar la cantidad de variables de decisión para cada una de las}
+        \PY{c}{\PYZpc{} familias de variables:}
+        \PY{n}{Cant\PYZus{}Y}\PY{p}{=}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{n}{L}\PY{p}{;}
+        \PY{n}{Cant\PYZus{}V}\PY{p}{=}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{n}{L}\PY{p}{;}
+        \PY{n}{Cant\PYZus{}Z}\PY{p}{=}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{n}{L}\PY{p}{;}
+        \PY{n}{Cant\PYZus{}U}\PY{p}{=}\PY{n}{K}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{n}{L}\PY{p}{;}
+        \PY{c}{\PYZpc{} Cantidad de variables}
+        \PY{n}{FO\PYZus{}cant\PYZus{}variables}\PY{p}{=}\PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}V}\PY{o}{+}\PY{n}{Cant\PYZus{}Z}\PY{o}{+}\PY{n}{Cant\PYZus{}U}\PY{p}{;}
+        \PY{c}{\PYZpc{} Cantidad de objetivos: por defecto son dos}
+        \PY{n}{FO\PYZus{}cant\PYZus{}objetivos}\PY{p}{=}\PY{l+m+mi}{2}\PY{p}{;}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{Para este caso, la cantidad de periodos es de 24 meses, los cuales}
+        \PY{c+cm}{corresponden a la aproximación de las 96 semanas de duración del}
+        \PY{c+cm}{horizonte de planeación propuesto para el modelo exacto.}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}
+        \PY{n}{FO\PYZus{}cant\PYZus{}periodos}\PY{p}{=}\PY{n}{T}\PY{p}{;}
+        \PY{n}{FO\PYZus{}cant\PYZus{}productos}\PY{p}{=}\PY{n}{K}\PY{p}{;}
+        \PY{n}{FO\PYZus{}cant\PYZus{}lotes}\PY{p}{=}\PY{n}{L}\PY{p}{;}
+        \PY{n}{FO\PYZus{}precio\PYZus{}venta}\PY{p}{=}\PY{n}{Pkt}\PY{p}{;}
+        \PY{n}{FO\PYZus{}rendimiento}\PY{p}{=}\PY{n}{Rkl}\PY{p}{;}
+        \PY{n}{FO\PYZus{}areas}\PY{p}{=}\PY{n}{Al}\PY{p}{;}
+        \PY{n}{FO\PYZus{}demanda}\PY{p}{=}\PY{n}{Demanda\PYZus{}Gv}\PY{p}{;}
+        \PY{n}{FO\PYZus{}familia\PYZus{}botanica}\PY{p}{=}\PY{n}{q}\PY{p}{;}
+        \PY{n}{FO\PYZus{}familia\PYZus{}venta}\PY{p}{=}\PY{n}{Gv}\PY{p}{;}
+        \PY{n}{FO\PYZus{}Covkkp}\PY{p}{=}\PY{n}{Covkkp}\PY{p}{;}
+        \PY{k}{end}
+\end{Verbatim}
+
+
+    \hypertarget{algortimo-para-generar-los-cromosomas-iniciales-inicializar_cromosomas.m}{%
+\subsection{Algortimo para generar los cromosomas iniciales
+(inicializar\_cromosomas.m)}\label{algortimo-para-generar-los-cromosomas-iniciales-inicializar_cromosomas.m}}
+
+La función denominada ``inicializar\_cromosomas'', tiene como parámetros
+de entrada las características del modelo aproximado (con unidades de
+tiempo basadas en meses en vez de semanas como el modelo exacto) y la
+cantidad de individuos que conforman la población. Esta función carga
+datos relacionados con las características del cromosoma como cantidad
+de periodos y restricciones de siembra y demás, retorna los cromosomas y
+sus respectivas funciones objetivo. Para cambiar el modelo, es necesario
+modificar el archivo .data ya que este indica los periodos de siembra,
+duración del periodo de madurez y otros elementos que caracterizan el
+caso de estudio a trabajar.
+
+Las variables de entrada son: poblacion (tamaño de la población),
+cant\_objetivos (cantidad de objetivos a evaluar), cant\_periodos
+(tamaño del horizonte del planeación), cant\_productos (cantidad de
+productos a cultivar), cant\_lotes (cantidad de ltoes a ser cultivados),
+precio\_venta (Precio de venta de cada producto para cada semana),
+rendimiento (cantidad de kilogramos por metro cuadrado a recoger de cada
+producto), areas (tamaño en metros cuadrados de cada lote), demanda
+(Demanda de cada categoría de productos),familia\_botanica (Familia
+botánica a la que pertenece cada producto),familia\_venta (Categorías o
+familia de venta a la cual pertenece cada producto) y Covkkp (covarianza
+entre los rendimientos o retornos económicos de cada producto).
+
+Las variables de salida son: IC\_Cromosomas (Conjunto de cromosomas o
+soluciones generadas de manera aleatoria) y IC\_Matriz\_objetivos
+(Matriz de objetivos, la cual incluye en primera linea o fila la
+penalización por inclumplimiento de restricciones, la segunda fila es el
+primer objetivo (Maximizar ingresos) menos la penalización y la tercera
+fila corresponde al segundo objetivo (Minimizar riesgo financiero)
+penalizada (sumando) por el valor de la fila 1.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{function}\PY{err}{ }\PY{err}{[}\PY{n+nf}{IC\PYZus{}Cromosomas}\PY{p}{,}\PY{n}{IC\PYZus{}Matriz\PYZus{}objetivos}\PY{p}{]} \PY{p}{=}\PY{c}{...}
+        \PY{n}{inicializar\PYZus{}cromosomas}\PY{p}{(}\PY{n}{poblacion}\PY{p}{,} \PY{n}{cant\PYZus{}objetivos}\PY{p}{,} \PY{n}{cant\PYZus{}periodos}\PY{p}{,} \PY{c}{...}
+        \PY{n}{cant\PYZus{}productos}\PY{p}{,} \PY{n}{cant\PYZus{}lotes}\PY{p}{,}\PY{n}{precio\PYZus{}venta}\PY{p}{,} \PY{n}{rendimiento}\PY{p}{,} \PY{n}{areas}\PY{p}{,} \PY{c}{...}
+        \PY{n}{demanda}\PY{p}{,}\PY{n}{familia\PYZus{}botanica}\PY{p}{,}\PY{n}{familia\PYZus{}venta}\PY{p}{,}\PY{n}{Covkkp}\PY{p}{)}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{Se cargan en el sistema los parámetros relacionados con las restricciones}
+        \PY{c+cm}{de producción, como los tiempo en los cuales se puede sembrar cada}
+        \PY{c+cm}{producto, la duración del mismo. Todo lo anterior, para la estructura de}
+        \PY{c+cm}{cromosoma, la cual está en meses y no semanas como el problema original.}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}
+        \PY{n}{load}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{parametros\PYZus{}maduracion.mat\PYZsq{}}\PY{p}{)}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{PPP = Productos Por Periodo}
+        \PY{c+cm}{MTS = Matriz Tiempos Siembra}
+        \PY{c+cm}{MFS = Matriz Fecha Siembra}
+        \PY{c+cm}{PM  = Periodo de maduración}
+        \PY{c+cm}{PMS = Periodo de maduración en semanas}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}
+        \PY{c}{\PYZpc{}Cálculo de variables y parámetros}
+        \PY{c}{\PYZpc{}Duración del proyecto}
+        \PY{n}{T}\PY{p}{=}\PY{n}{cant\PYZus{}periodos}\PY{p}{;}
+        \PY{c}{\PYZpc{} Cantidad de Lotes}
+        \PY{n}{L}\PY{p}{=}\PY{n}{cant\PYZus{}lotes}\PY{p}{;}
+        \PY{c}{\PYZpc{} Cantidad de cromosomas}
+        \PY{n}{C}\PY{p}{=}\PY{n}{poblacion}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se contruye la matriz donde se almacenarán la función de ajuste, seguida}
+        \PY{c}{\PYZpc{} de las funciones objetivo}
+        \PY{n}{IC\PYZus{}Matriz\PYZus{}objetivos}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{cant\PYZus{}objetivos}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{poblacion}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Creación del cromosoma}
+        \PY{n}{IC\PYZus{}Cromosomas}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{L}\PY{o}{*}\PY{n}{C}\PY{p}{)}\PY{p}{;}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{Cromosomas auxiliares para llevar la asignación de tiempos y bloqueo de}
+        \PY{c+cm}{Ayuda a organizar los productos en los diversos periodos}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}} 
+        \PY{n}{Cromosoma\PYZus{}aux1}\PY{p}{=}\PY{l+m+mi}{0}\PY{o}{*}\PY{n}{IC\PYZus{}Cromosomas}\PY{p}{;}
+        \PY{c}{\PYZpc{} Almacena el contador de meses en que dura ocupado cada terreno}
+        \PY{n}{Cromosoma\PYZus{}aux2}\PY{p}{=}\PY{n}{Cromosoma\PYZus{}aux1}\PY{p}{;}
+        \PY{c}{\PYZpc{} Ayuda a verificar condiciones del cromosoma}
+        \PY{n}{Cromosoma\PYZus{}aux3}\PY{p}{=}\PY{n}{Cromosoma\PYZus{}aux1}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se realiza un bucle durante la duración del proyecto, por ahorro en}
+        \PY{c}{\PYZpc{} recursos computacionales, no se tiene en cuenta los tres últimos periodos}
+        \PY{c}{\PYZpc{} ya que ningún producto puede ser sembrado en ese instante:}
+        \PY{k}{for} \PY{n}{tiempo}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{T}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}
+        \PY{c}{\PYZpc{}Para cada periodo se asignan aletoriamente los 25 productos en L}
+        \PY{c}{\PYZpc{}lotes, siempre y cuando estos puedan ser sembrados en ese instante y}
+        \PY{c}{\PYZpc{}existan lotes disponibles}
+        \PY{n}{IC\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{=} \PY{p}{(}\PY{n}{datasample}\PY{p}{(}\PY{n+nb}{find}\PY{p}{(}\PY{n}{MFS}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{tiempo}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,}\PY{n}{L}\PY{o}{*}\PY{n}{C}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{p}{)}\PY{o}{.*}\PY{c}{...}
+        \PY{n}{Cromosoma\PYZus{}aux3}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}Se contruye el vector auxiliar 1}
+        \PY{n}{Cromosoma\PYZus{}aux1}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{=}\PY{n}{IC\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}Se crea un listado de los productos que pueden ser sembrados en cada}
+        \PY{c}{\PYZpc{}periodo}
+        \PY{n}{var\PYZus{}aux1}\PY{p}{=}\PY{n+nb}{find}\PY{p}{(}\PY{n}{MFS}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{tiempo}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}Se registra en el vector auxiliar la cantidad de periodos de}
+        \PY{c}{\PYZpc{}maduración para cada producto}
+        \PY{k}{for} \PY{n}{listado}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{length}\PY{p}{(}\PY{n}{var\PYZus{}aux1}\PY{p}{)}
+        \PY{n}{Cromosoma\PYZus{}aux2}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)} \PY{p}{=} \PY{n}{Cromosoma\PYZus{}aux2}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{IC\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{o}{==}\PY{c}{...}
+        \PY{n}{ar\PYZus{}aux1}\PY{p}{(}\PY{n}{listado}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{n}{PM}\PY{p}{(}\PY{n}{var\PYZus{}aux1}\PY{p}{(}\PY{n}{listado}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{Una vez asignado el primer cultivo, se recorren los vectores}
+        \PY{c+cm}{auxiliares con el fin de evitar doble asignación mientras cada lote}
+        \PY{c+cm}{está ocupado (durante el periodo de madurez de cada lote), para ello,}
+        \PY{c+cm}{un vector auxiliar es el contador de madurez y una vez sea cero,}
+        \PY{c+cm}{puede sembrarse otro cultivo.}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}         
+        \PY{k}{while} \PY{n}{tiempo} \PY{o}{\PYZgt{}} \PY{l+m+mi}{1}
+        \PY{n}{Cromosoma\PYZus{}aux2}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)} \PY{p}{=} \PY{n}{Cromosoma\PYZus{}aux2}\PY{p}{(}\PY{n}{tiempo}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{p}{:}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{;}
+        \PY{c}{\PYZpc{}Se asigna aleatoriamente los cultivos para el subconjunto de}
+        \PY{c}{\PYZpc{}productos respectivo a cada mes.}
+        \PY{n}{IC\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{=}\PY{p}{(}\PY{n}{datasample}\PY{p}{(}\PY{n+nb}{find}\PY{p}{(}\PY{n}{MFS}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{tiempo}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,}\PY{n}{L}\PY{o}{*}\PY{n}{C}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{p}{)}\PY{o}{.*}\PY{c}{...}
+        \PY{p}{(}\PY{n}{Cromosoma\PYZus{}aux2}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}Se actualiza el valor del cromosoma auxiliar}
+        \PY{n}{Cromosoma\PYZus{}aux1}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{=}\PY{n}{IC\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}Determino un listado de los productos que pueden ser sembrados}
+        \PY{c}{\PYZpc{}en cada periodo}
+        \PY{n}{var\PYZus{}aux1}\PY{p}{=}\PY{n+nb}{find}\PY{p}{(}\PY{n}{MFS}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{tiempo}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}Se bloquea la asignación de productos mientras esté el periodo de}
+        \PY{c}{\PYZpc{}madurez}
+        \PY{k}{for} \PY{n}{listado}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{length}\PY{p}{(}\PY{n}{var\PYZus{}aux1}\PY{p}{)}
+        \PY{n}{Cromosoma\PYZus{}aux2}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)} \PY{p}{=} \PY{n}{Cromosoma\PYZus{}aux2}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{IC\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{o}{==}\PY{c}{...}
+        \PY{n}{var\PYZus{}aux1}\PY{p}{(}\PY{n}{listado}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{n}{PM}\PY{p}{(}\PY{n}{var\PYZus{}aux1}\PY{p}{(}\PY{n}{listado}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{k}{break}
+        \PY{k}{end}
+        \PY{k}{end}
+        \PY{c}{\PYZpc{} Se evalúan las soluciones usando otra función}
+        \PY{p}{[}\PY{n}{IC\PYZus{}Cromosomas}\PY{p}{,}\PY{n}{IC\PYZus{}Matriz\PYZus{}objetivos}\PY{p}{]}\PY{p}{=}\PY{n}{Evaluar\PYZus{}individuos}\PY{p}{(}\PY{n}{IC\PYZus{}Cromosomas}\PY{p}{,}\PY{c}{...}
+        \PY{n}{IC\PYZus{}Matriz\PYZus{}objetivos} \PY{p}{,} \PY{n}{poblacion}\PY{p}{,} \PY{n}{cant\PYZus{}productos}\PY{p}{,} \PY{n}{cant\PYZus{}lotes}\PY{p}{,} \PY{n}{PMS}\PY{p}{,} \PY{c}{...}
+        \PY{n}{Covkkp}\PY{p}{,} \PY{n}{precio\PYZus{}venta}\PY{p}{,}\PY{n}{rendimiento}\PY{p}{,} \PY{n}{areas}\PY{p}{,} \PY{n}{demanda}\PY{p}{,}\PY{n}{familia\PYZus{}botanica}\PY{p}{,}\PY{c}{...}
+        \PY{n}{familia\PYZus{}venta}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+\end{Verbatim}
+
+
+    \hypertarget{algortimo-para-evaluar-los-cromosomas-iniciales-evaluar_individuos.m}{%
+\subsection{Algortimo para evaluar los cromosomas iniciales
+(Evaluar\_individuos.m)}\label{algortimo-para-evaluar-los-cromosomas-iniciales-evaluar_individuos.m}}
+
+La función denominada ``Evaluar\_individuos'' toma como parámetros de
+entrada la población de soluciones y una variable en la cual se
+almacenarán los resultados de tres funciones: 1) Función de ajuste, 2)
+Maximizar ingresos y 3) minimizar riesgo financiero del portafolio.
+Dentro de la función los datos son transformados parcialmente con el
+propósito de evaluar el cumplimiento de ciertas restricciones y valorar
+el desempeño de las soluciones.
+
+Se construye una variable en la cual se almacenarán tres valores para
+cada individuo. La primera fila corresponde a la función fitness, la
+cual es la suma de la penalizaciones relacionadas con el incumplimiento
+de restricciones y la cantidad de periodos inproductivos del lote: 1)
+restricciones\_tiempo (la cual cuantifica la cantidad de variables en
+todos los lotes que exceden el horizonte de planeación), 2)
+restricciones\_holgura (cuantifica cuántos periodos por encima o por
+debajo del horizonte de planeación se encuentra), 3) sobre producción,
+la cual no se almacena como variable sino cuantifica la cantidad total
+de kilogramos de productos (por familia de venta) sembrados y recogidos,
+que no pueden ser vendidos ya que no existe demanda), 4) rotaciones
+(cuenta la cantidad de veces que quedaron sembrados de manera seguida
+dos productos que pertenecen a la misma familia. La segunda fila
+corresponde al valor de la primera función objetivo (Maximizar ingresos)
+menos las penalizaciones calculadas en la primera fila. La tercera fila
+corresponde al valor de la segunda función objetivo (Minimizar riesgo
+financiero) más la penalización calculada en la fila 1.
+
+Las variables de entrada son: EI\_Cromosomas,EI\_Matriz\_objetivos,
+EI\_poblacion (tamaño de la población), EI\_cant\_productos(cantidad de
+productos a cultivar), EI\_cant\_lotes (cantidad de lotes a ser
+cultivados), EI\_PMS (Periodo de maduración en semanas), EI\_Covkkp
+(covarianza entre los rendimientos o retornos económicos de cada
+producto), EI\_precio\_venta (Precio de venta de cada producto para cada
+semana), EI\_rendimiento (cantidad de kilogramos por metro cuadrado a
+recoger de cada producto), EI\_areas (tamaño en metros cuadrados de cada
+lote), EI\_demanda (Demanda de cada categoría de productos),
+EI\_familia\_botanica (Familia botánica a la que pertenece cada
+producto), EI\_familia\_venta (Categorías o familia de venta a la cual
+pertenece cada producto).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{function}\PY{err}{ }\PY{err}{[}\PY{n+nf}{EI\PYZus{}Cromosomas}\PY{p}{,}\PY{n}{EI\PYZus{}Matriz\PYZus{}objetivos}\PY{p}{]} \PY{p}{=} \PY{c}{...}
+        \PY{n}{Evaluar\PYZus{}individuos}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{,}\PY{n}{EI\PYZus{}Matriz\PYZus{}objetivos} \PY{p}{,} \PY{n}{EI\PYZus{}poblacion}\PY{p}{,}  \PY{c}{...}
+        \PY{n}{EI\PYZus{}cant\PYZus{}productos}\PY{p}{,} \PY{n}{EI\PYZus{}cant\PYZus{}lotes}\PY{p}{,} \PY{n}{EI\PYZus{}PMS}\PY{p}{,} \PY{n}{EI\PYZus{}Covkkp}\PY{p}{,} \PY{n}{EI\PYZus{}precio\PYZus{}venta}\PY{p}{,}\PY{c}{...}
+        \PY{n}{EI\PYZus{}rendimiento}\PY{p}{,} \PY{n}{EI\PYZus{}areas}\PY{p}{,} \PY{n}{EI\PYZus{}demanda}\PY{p}{,}\PY{n}{EI\PYZus{}familia\PYZus{}botanica}\PY{p}{,}\PY{n}{EI\PYZus{}familia\PYZus{}venta}\PY{p}{)}
+        
+        \PY{c}{\PYZpc{} Se calcula la cantidad de periodos del proyecto.}
+        \PY{p}{[}\PY{n}{T}\PY{p}{,}\PY{o}{\PYZti{}}\PY{p}{]}\PY{p}{=}\PY{n+nb}{size}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se realiza un recorrido para evaluar cada individuo}
+        \PY{k}{for} \PY{n}{individuo}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{EI\PYZus{}poblacion}
+        \PY{c}{\PYZpc{} Se crean una matriz para almacenar la cantidad de producto (en}
+        \PY{c}{\PYZpc{} kilogramos) que se recoge de cada producto para cada individuo.}
+        \PY{n}{Matriz\PYZus{}productos}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{EI\PYZus{}cant\PYZus{}productos}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se construye un vector para almacenar el volumen de producción, este}
+        \PY{c}{\PYZpc{} vector posteriormente se contrasta con la demanda para el horizonte}
+        \PY{c}{\PYZpc{} de planeación}
+        \PY{n}{Matriz\PYZus{}venta}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n+nb}{length}\PY{p}{(}\PY{n}{EI\PYZus{}demanda}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se contruye una variable para contabilizar la cantidad de veces que}
+        \PY{c}{\PYZpc{} son sembrados dos productos de manera consecutiva que pertenecen a la}
+        \PY{c}{\PYZpc{} misma familia botánica.}
+        \PY{n}{rotaciones}\PY{p}{=}\PY{l+m+mi}{0}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se genera un recorrido para todos los lotes de cada uno de los}
+        \PY{c}{\PYZpc{} individuos.}
+        \PY{k}{for} \PY{n}{lote}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{EI\PYZus{}cant\PYZus{}lotes}
+        \PY{c}{\PYZpc{} Se construye una variable auxiliar}
+        \PY{n}{recorrido}\PY{p}{=}\PY{n}{EI\PYZus{}cant\PYZus{}lotes}\PY{o}{*}\PY{p}{(}\PY{n}{individuo}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{lote}\PY{p}{;}
+        
+        \PY{n}{restricciones\PYZus{}tiempo}\PY{p}{=}\PY{l+m+mi}{0}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se determina si la solución excede el horizonte de planeación}
+        \PY{k}{if} \PY{n}{sum}\PY{p}{(}\PY{n}{cumsum}\PY{p}{(}\PY{n}{EI\PYZus{}PMS}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{\PYZgt{}}\PY{n}{T}\PY{o}{*}\PY{l+m+mi}{4}\PY{p}{)}\PY{o}{\PYZgt{}}\PY{p}{=}\PY{l+m+mi}{1}
+        \PY{c}{\PYZpc{} Determinar cuántos productos en cada lote exceden el horizonte de planeación}
+        \PY{n}{restricciones\PYZus{}tiempo}\PY{p}{=}\PY{n}{sum}\PY{p}{(}\PY{n}{cumsum}\PY{p}{(}\PY{n}{EI\PYZus{}PMS}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{\PYZgt{}}\PY{n}{T}\PY{o}{*}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{;}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{transformo el valor de recogida de la última solución por el valor máximo}
+        \PY{c+cm}{del horizonte de planeación, con el propósito de determinar el precio de}
+        \PY{c+cm}{venta y calcular las penalizaicones por holguras, para ello construyo una}
+        \PY{c+cm}{varible auxiliar:}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}
+        
+        \PY{n}{periodo}\PY{p}{=}\PY{n}{cumsum}\PY{p}{(}\PY{n}{EI\PYZus{}PMS}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}  reemplazo el valor del tiempo de recogida del último producto}
+        \PY{n}{periodo}\PY{p}{(}\PY{n+nb}{find}\PY{p}{(}\PY{n}{periodo}\PY{o}{\PYZgt{}}\PY{n}{T}\PY{o}{*}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{n}{T}\PY{o}{*}\PY{l+m+mi}{4}\PY{p}{;}
+        \PY{c}{\PYZpc{} Almaceno el valor de la primera función objetivo (mazimizar ingresos) en}
+        \PY{c}{\PYZpc{} la variable de salida:}
+        \PY{n}{EI\PYZus{}Matriz\PYZus{}objetivos}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{individuo}\PY{p}{)}\PY{p}{=}\PY{n}{EI\PYZus{}Matriz\PYZus{}objetivos}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{individuo}\PY{p}{)}\PY{o}{+}\PY{c}{...}
+        \PY{n}{sum}\PY{p}{(}\PY{n}{EI\PYZus{}rendimiento}\PY{p}{(}\PY{n}{lote}\PY{p}{,}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{o}{*}\PY{c}{...}
+        \PY{n}{EI\PYZus{}areas}\PY{p}{(}\PY{n}{lote}\PY{p}{)}\PY{o}{.*}\PY{n+nb}{diag}\PY{p}{(}\PY{n}{EI\PYZus{}precio\PYZus{}venta}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{p}{,}\PY{n}{periodo}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} para cada lote, se almacena la cantidad de producto cosechado}
+        \PY{n}{Matriz\PYZus{}productos}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{p}{)}\PY{p}{=}\PY{c}{...}
+        \PY{n}{Matriz\PYZus{}productos}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{p}{)}\PY{o}{+}\PY{c}{...}
+        \PY{p}{(}\PY{n}{EI\PYZus{}rendimiento}\PY{p}{(}\PY{n}{lote}\PY{p}{,}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{o}{*}\PY{n}{EI\PYZus{}areas}\PY{p}{(}\PY{n}{lote}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{p}{;}
+        \PY{k}{else}
+        \PY{n}{EI\PYZus{}Matriz\PYZus{}objetivos}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{individuo}\PY{p}{)}\PY{p}{=}\PY{n}{EI\PYZus{}Matriz\PYZus{}objetivos}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{individuo}\PY{p}{)}\PY{o}{+}\PY{c}{...}
+        \PY{n}{sum}\PY{p}{(}\PY{n}{EI\PYZus{}rendimiento}\PY{p}{(}\PY{n}{lote}\PY{p}{,}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{o}{*}\PY{c}{...}
+        \PY{n}{EI\PYZus{}areas}\PY{p}{(}\PY{n}{lote}\PY{p}{)}\PY{o}{.*}\PY{n+nb}{diag}\PY{p}{(}\PY{n}{EI\PYZus{}precio\PYZus{}venta}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{p}{,}\PY{c}{...}
+        \PY{n}{cumsum}\PY{p}{(}\PY{n}{EI\PYZus{}PMS}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} para cada lote, se almacena la cantidad de producto cosechado}
+        \PY{n}{Matriz\PYZus{}productos}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{p}{)}\PY{p}{=}\PY{c}{...}
+        \PY{n}{Matriz\PYZus{}productos}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{p}{)}\PY{o}{+}\PY{c}{...}
+        \PY{p}{(}\PY{n}{EI\PYZus{}rendimiento}\PY{p}{(}\PY{n}{lote}\PY{p}{,}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{o}{*}\PY{n}{EI\PYZus{}areas}\PY{p}{(}\PY{n}{lote}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{p}{;}
+        \PY{k}{end}
+        \PY{c}{\PYZpc{} Se cuantifican la cantidad de periodos de sub utilziación o sobre}
+        \PY{c}{\PYZpc{} utilización del terreno:}
+        \PY{n}{restricciones\PYZus{}holgura}\PY{p}{=}\PY{n+nb}{abs}\PY{p}{(}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{l+m+mi}{4}\PY{o}{\PYZhy{}}\PY{n}{max}\PY{p}{(}\PY{n}{cumsum}\PY{p}{(}\PY{n}{EI\PYZus{}PMS}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{,}\PY{c}{...}
+        \PY{n}{recorrido}\PY{p}{)}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se almacena la cantidad de kilos recogida de cada producto}
+        \PY{n}{kilos}\PY{p}{=} \PY{n}{EI\PYZus{}rendimiento}\PY{p}{(}\PY{n}{lote}\PY{p}{,}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{o}{*}\PY{n}{EI\PYZus{}areas}\PY{p}{(}\PY{n}{lote}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} ¿A cuál grupo de venta pertenece cada producto?}
+        \PY{n}{recorrido2}\PY{p}{=}\PY{n}{EI\PYZus{}familia\PYZus{}venta}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{n}{EI\PYZus{}Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{recorrido}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se suma la cantidad de veces que no existe rotación de familias}
+        \PY{c}{\PYZpc{} botánicas:}
+        \PY{n}{rotaciones}\PY{p}{=}\PY{n}{rotaciones}\PY{o}{+}\PY{n}{sum}\PY{p}{(}\PY{n}{recorrido2}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{:}\PY{n+nb}{length}\PY{p}{(}\PY{n}{recorrido2}\PY{p}{)}\PY{p}{)}\PY{o}{==}\PY{n}{recorrido2}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{length}\PY{p}{(}\PY{n}{recorrido2}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se crea un bucle para almacenar la producción en las respectivas}
+        \PY{c}{\PYZpc{} familias de venta, con el fin de contrastar con la demanda}
+        \PY{k}{for} \PY{n}{productos\PYZus{}vendidos}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{length}\PY{p}{(}\PY{n}{recorrido2}\PY{p}{)}
+        \PY{c}{\PYZpc{} Se actualiza el valor de la matriz venta}
+        \PY{n}{Matriz\PYZus{}venta}\PY{p}{(}\PY{n}{recorrido2}\PY{p}{(}\PY{n}{productos\PYZus{}vendidos}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{n}{Matriz\PYZus{}venta}\PY{p}{(}\PY{n}{recorrido2}\PY{p}{(}\PY{n}{productos\PYZus{}vendidos}\PY{p}{)}\PY{p}{)}\PY{o}{+}\PY{c}{...}
+        \PY{n}{kilos}\PY{p}{(}\PY{n}{productos\PYZus{}vendidos}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{c}{\PYZpc{} Se evaluan variables una vez finalizado el recorrido por todos}
+        \PY{c}{\PYZpc{} los lotes para cada ndividuo.}
+        \PY{k}{if} \PY{n}{lote}\PY{o}{==}\PY{n}{EI\PYZus{}cant\PYZus{}lotes}
+        \PY{c}{\PYZpc{} Se actualiza el valor de la función fitness}
+        \PY{n}{EI\PYZus{}Matriz\PYZus{}objetivos}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{individuo}\PY{p}{)}\PY{p}{=} \PY{o}{\PYZhy{}}\PY{c}{...}
+        \PY{n}{restricciones\PYZus{}tiempo} \PY{o}{\PYZhy{}}\PY{c}{...}
+        \PY{n}{restricciones\PYZus{}holgura} \PY{o}{\PYZhy{}}\PY{c}{...}
+        \PY{n}{sum}\PY{p}{(}\PY{n}{Matriz\PYZus{}venta}\PY{o}{\PYZhy{}}\PY{n}{EI\PYZus{}demanda}\PY{o}{.*}\PY{n}{Matriz\PYZus{}venta}\PY{o}{\PYZgt{}}\PY{n}{EI\PYZus{}demanda}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{c}{...}
+        \PY{n}{rotaciones}\PY{p}{;}
+        \PY{n}{EI\PYZus{}Matriz\PYZus{}objetivos}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{individuo}\PY{p}{)}\PY{p}{=}\PY{n}{EI\PYZus{}Matriz\PYZus{}objetivos}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{individuo}\PY{p}{)}\PY{o}{+}\PY{n}{EI\PYZus{}Matriz\PYZus{}objetivos}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{individuo}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se calcula el riesgo del portafolio}
+        \PY{n}{EI\PYZus{}Matriz\PYZus{}objetivos}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,}\PY{n}{individuo}\PY{p}{)}\PY{p}{=}\PY{n}{Matriz\PYZus{}productos}\PY{o}{*}\PY{n}{EI\PYZus{}Covkkp}\PY{o}{*}\PY{n}{Matriz\PYZus{}productos}\PY{o}{\PYZsq{}}\PY{o}{+}\PY{n}{EI\PYZus{}Matriz\PYZus{}objetivos}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{individuo}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{k}{end}
+        \PY{k}{end}
+        \PY{k}{end}
+\end{Verbatim}
+
+
+    \hypertarget{algortimo-para-determinar-la-dominancia-de-las-soluciones-ordenar_poblacion.m}{%
+\subsection{Algortimo para determinar la dominancia de las soluciones
+(ordenar\_poblacion.m)}\label{algortimo-para-determinar-la-dominancia-de-las-soluciones-ordenar_poblacion.m}}
+
+La función clasifica la población actual basada en la no dominancia.
+Todos los individuos en el primer frente reciben un rango de 1, a los
+individuos del segundo frente se les asigna el rango 2 y así
+sucesivamente. Después de asignar el rango se calcula la distancia de
+apilamiento. las variables de entrada del modelo son: OP\_Cromosomas
+(Soluciones a ordenar), OP\_Matriz\_objetivos (Funciones de ajuste) y
+OP\_cant\_objetivos (Cantidad de objetivos). Como variables de salida
+tiene dos soluciones sin transformar: OP\_Cromosomas y
+OP\_Matriz\_objetivos. Además la variable OP\_criterio\_evaluacion
+(criterios de evaluación, donde la primera fila corresponde al frente al
+cual pertenece cada solución y la segunda fila la distancia de
+apilamiento de la solución en su respectivo frente).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{function}\PY{err}{ }\PY{err}{[}  \PY{n+nf}{OP\PYZus{}Cromosomas}\PY{p}{,} \PY{n}{OP\PYZus{}Matriz\PYZus{}objetivos}\PY{p}{,} \PY{n}{OP\PYZus{}criterio\PYZus{}evaluacion} \PY{p}{]} \PY{p}{=} \PY{c}{...}
+        \PY{n}{ordenar\PYZus{}poblacion}\PY{p}{(}  \PY{n}{OP\PYZus{}Cromosomas}\PY{p}{,} \PY{n}{OP\PYZus{}Matriz\PYZus{}objetivos}\PY{p}{,} \PY{n}{OP\PYZus{}cant\PYZus{}objetivos} \PY{p}{)}
+        \PY{c}{\PYZpc{} Se cargan las variables en la función}
+        \PY{n}{OP\PYZus{}Cromosomas}\PY{p}{=}\PY{n}{OP\PYZus{}Cromosomas}\PY{p}{;}
+        \PY{n}{OP\PYZus{}cant\PYZus{}objetivos}\PY{p}{=}\PY{n}{OP\PYZus{}cant\PYZus{}objetivos}\PY{p}{;}
+        \PY{c}{\PYZpc{}Para comodidad de cálculos, se almacena el conjunto de valores de las}
+        \PY{c}{\PYZpc{} funciones objetivo en una variable auxiliar.}
+        \PY{n}{x}\PY{p}{=}\PY{n}{OP\PYZus{}Matriz\PYZus{}objetivos}\PY{o}{\PYZsq{}}\PY{p}{;}
+        \PY{c}{\PYZpc{}Para el ordenamiento se utiliza solamente los objetivos de maximizar}
+        \PY{c}{\PYZpc{}ingresos y disminuir riesgo.}
+        \PY{n}{x}\PY{p}{=}\PY{n}{x}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{:}\PY{n}{OP\PYZus{}cant\PYZus{}objetivos}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}por comodidad de cálculo, los valores de la función de maximizar son}
+        \PY{c}{\PYZpc{}premultiplicados por \PYZhy{}1 con el propósito de codificar el cálculo en}
+        \PY{c}{\PYZpc{}funcion de variables de minimización}
+        \PY{n}{x}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{=}\PY{o}{\PYZhy{}}\PY{n}{x}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} se extrae la cantidad de individuos a organizar}
+        \PY{p}{[}\PY{n}{N}\PY{p}{,} \PY{o}{\PYZti{}}\PY{p}{]} \PY{p}{=} \PY{n+nb}{size}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} se utiliza una variable auxiliar para hacr cálculos con los frnetes de}
+        \PY{c}{\PYZpc{} cada objetivo (se reemplaza ocn el fin de facilitar la escritura dle}
+        \PY{c}{\PYZpc{} código)}
+        \PY{n}{M}\PY{p}{=}\PY{n}{OP\PYZus{}cant\PYZus{}objetivos}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se inicializa un contador de frentes de pareto}
+        \PY{n}{frente} \PY{p}{=} \PY{l+m+mi}{1}\PY{p}{;}
+        \PY{c}{\PYZpc{} se cosntruyen dos estructuras para almacenar la dominancia y frente al}
+        \PY{c}{\PYZpc{} que pertenecen los individuos}
+        \PY{n}{F}\PY{p}{(}\PY{n}{frente}\PY{p}{)}\PY{p}{.}\PY{n}{f} \PY{p}{=} \PY{p}{[}\PY{p}{]}\PY{p}{;}
+        \PY{n}{individuo} \PY{p}{=} \PY{p}{[}\PY{p}{]}\PY{p}{;}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{Debido a su extensión, el código se divide en dos secciones relacionadas}
+        \PY{c+cm}{con la formación del frente de Pareto y el cálculo de la distancia de apilamiento}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}
+\end{Verbatim}
+
+
+    \hypertarget{formaciuxf3n-del-frente-de-pareto}{%
+\subsubsection{Formación del frente de
+Pareto}\label{formaciuxf3n-del-frente-de-pareto}}
+
+Para cada par de individuos (incluyendo el individuo en sí), se realiza
+una comparación de sus objetivos, con el propósito de determinar la
+dominancia.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c}{\PYZpc{} Para cada individuo i}
+        \PY{k}{for} \PY{n+nb}{i} \PY{p}{=} \PY{l+m+mi}{1} \PY{p}{:} \PY{n}{N}
+        \PY{c}{\PYZpc{} Número de individuos que dominan a este individuo}
+        \PY{n}{individuo}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{.}\PY{n}{n} \PY{p}{=} \PY{l+m+mi}{0}\PY{p}{;}
+        \PY{c}{\PYZpc{} Número de individuos que domina este individuo}
+        \PY{n}{individuo}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{.}\PY{n}{p} \PY{p}{=} \PY{p}{[}\PY{p}{]}\PY{p}{;}
+        \PY{c}{\PYZpc{}para cada individuo j}
+        \PY{k}{for} \PY{n+nb}{j} \PY{p}{=} \PY{l+m+mi}{1} \PY{p}{:} \PY{n}{N}
+        \PY{c}{\PYZpc{}contadores de cominancia}
+        \PY{n}{domina\PYZus{}menos} \PY{p}{=} \PY{l+m+mi}{0}\PY{p}{;}
+        \PY{n}{domina\PYZus{}igual} \PY{p}{=} \PY{l+m+mi}{0}\PY{p}{;}
+        \PY{n}{domina\PYZus{}mas} \PY{p}{=} \PY{l+m+mi}{0}\PY{p}{;}
+        \PY{c}{\PYZpc{}para cada objetivo}
+        \PY{k}{for} \PY{n}{k} \PY{p}{=} \PY{l+m+mi}{1} \PY{p}{:} \PY{n}{M}
+        \PY{c}{\PYZpc{}se compara el valor del objetivo k, entre el dindividuo i e}
+        \PY{c}{\PYZpc{}individuo j}
+        \PY{k}{if} \PY{p}{(}\PY{n}{x}\PY{p}{(}\PY{n+nb}{i}\PY{p}{,} \PY{n}{k}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{x}\PY{p}{(}\PY{n+nb}{j}\PY{p}{,} \PY{n}{k}\PY{p}{)}\PY{p}{)}
+        \PY{n}{domina\PYZus{}menos} \PY{p}{=} \PY{n}{domina\PYZus{}menos} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{;}
+        \PY{k}{elseif} \PY{p}{(}\PY{n}{x}\PY{p}{(}\PY{n+nb}{i}\PY{p}{,} \PY{n}{k}\PY{p}{)} \PY{o}{==} \PY{n}{x}\PY{p}{(}\PY{n+nb}{j}\PY{p}{,} \PY{n}{k}\PY{p}{)}\PY{p}{)}
+        \PY{n}{domina\PYZus{}igual} \PY{p}{=} \PY{n}{domina\PYZus{}igual} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{;}
+        \PY{k}{else}
+        \PY{n}{domina\PYZus{}mas} \PY{p}{=} \PY{n}{domina\PYZus{}mas} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{;}
+        \PY{k}{end}
+        \PY{k}{end}
+        \PY{c}{\PYZpc{}se determina la dominancia entre cada par de individuos}
+        \PY{k}{if} \PY{n}{domina\PYZus{}menos} \PY{o}{==} \PY{l+m+mi}{0} \PY{o}{\PYZam{}\PYZam{}} \PY{n}{domina\PYZus{}igual} \PY{o}{\PYZti{}=} \PY{n}{M}
+        \PY{n}{individuo}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{.}\PY{n}{n} \PY{p}{=} \PY{n}{individuo}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{.}\PY{n}{n} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{;}
+        \PY{k}{elseif} \PY{n}{domina\PYZus{}mas} \PY{o}{==} \PY{l+m+mi}{0} \PY{o}{\PYZam{}\PYZam{}} \PY{n}{domina\PYZus{}igual} \PY{o}{\PYZti{}=} \PY{n}{M}
+        \PY{n}{individuo}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{.}\PY{n}{p} \PY{p}{=} \PY{p}{[}\PY{n}{individuo}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{.}\PY{n}{p} \PY{n+nb}{j}\PY{p}{]}\PY{p}{;}
+        \PY{k}{end}
+        \PY{k}{end}
+        \PY{c}{\PYZpc{}si el individuo i no es dominado, se le asigna el individuo i al}
+        \PY{c}{\PYZpc{}frente f}
+        \PY{k}{if} \PY{n}{individuo}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{.}\PY{n}{n} \PY{o}{==} \PY{l+m+mi}{0}
+        \PY{n}{x}\PY{p}{(}\PY{n+nb}{i}\PY{p}{,}\PY{n}{M} \PY{o}{+}  \PY{l+m+mi}{1}\PY{p}{)} \PY{p}{=} \PY{l+m+mi}{1}\PY{p}{;}
+        \PY{n}{F}\PY{p}{(}\PY{n}{frente}\PY{p}{)}\PY{p}{.}\PY{n}{f} \PY{p}{=} \PY{p}{[}\PY{n}{F}\PY{p}{(}\PY{n}{frente}\PY{p}{)}\PY{p}{.}\PY{n}{f} \PY{n+nb}{i}\PY{p}{]}\PY{p}{;}
+        \PY{k}{end}
+        \PY{k}{end}
+        \PY{c}{\PYZpc{} Una vez formado los frentes mediante la identificación de dominancia, son}
+        \PY{c}{\PYZpc{} organizados (categorizados) los individuos de cada frente, para }
+        \PY{c}{\PYZpc{} posteriormente calcular la distancia de apilamiento:}
+        \PY{c}{\PYZpc{} mientras existan individuos en cada frente}
+        \PY{k}{while} \PY{o}{\PYZti{}}\PY{n+nb}{isempty}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{n}{frente}\PY{p}{)}\PY{p}{.}\PY{n}{f}\PY{p}{)}
+        \PY{c}{\PYZpc{}     se crea una variable auxiliar para almacenar a lso individuos}
+        \PY{n}{Q} \PY{p}{=} \PY{p}{[}\PY{p}{]}\PY{p}{;}
+        \PY{c}{\PYZpc{}     se realiza un recorrido por todos los miembros del frente}
+        \PY{k}{for} \PY{n+nb}{i} \PY{p}{=} \PY{l+m+mi}{1} \PY{p}{:} \PY{n+nb}{length}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{n}{frente}\PY{p}{)}\PY{p}{.}\PY{n}{f}\PY{p}{)}
+        \PY{c}{\PYZpc{}si el individuo domina a otro}
+        \PY{k}{if} \PY{o}{\PYZti{}}\PY{n+nb}{isempty}\PY{p}{(}\PY{n}{individuo}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{n}{frente}\PY{p}{)}\PY{p}{.}\PY{n}{f}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{)}\PY{p}{.}\PY{n}{p}\PY{p}{)}
+        \PY{c}{\PYZpc{}             se compara la dominancia de lso individuos en el frente}
+        \PY{k}{for} \PY{n+nb}{j} \PY{p}{=} \PY{l+m+mi}{1} \PY{p}{:} \PY{n+nb}{length}\PY{p}{(}\PY{n}{individuo}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{n}{frente}\PY{p}{)}\PY{p}{.}\PY{n}{f}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{)}\PY{p}{.}\PY{n}{p}\PY{p}{)}
+        \PY{n}{individuo}\PY{p}{(}\PY{n}{individuo}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{n}{frente}\PY{p}{)}\PY{p}{.}\PY{n}{f}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{)}\PY{p}{.}\PY{n}{p}\PY{p}{(}\PY{n+nb}{j}\PY{p}{)}\PY{p}{)}\PY{p}{.}\PY{n}{n} \PY{p}{=} \PY{c}{...}
+        \PY{n}{individuo}\PY{p}{(}\PY{n}{individuo}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{n}{frente}\PY{p}{)}\PY{p}{.}\PY{n}{f}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{)}\PY{p}{.}\PY{n}{p}\PY{p}{(}\PY{n+nb}{j}\PY{p}{)}\PY{p}{)}\PY{p}{.}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{;}
+        \PY{c}{\PYZpc{}se actualzian los valores de dominancia para los}
+        \PY{c}{\PYZpc{}individuos del mismo frente y se organizan en la variable}
+        \PY{c}{\PYZpc{}auxiliar Q}
+        \PY{k}{if} \PY{n}{individuo}\PY{p}{(}\PY{n}{individuo}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{n}{frente}\PY{p}{)}\PY{p}{.}\PY{n}{f}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{)}\PY{p}{.}\PY{n}{p}\PY{p}{(}\PY{n+nb}{j}\PY{p}{)}\PY{p}{)}\PY{p}{.}\PY{n}{n} \PY{o}{==} \PY{l+m+mi}{0}
+        \PY{n}{x}\PY{p}{(}\PY{n}{individuo}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{n}{frente}\PY{p}{)}\PY{p}{.}\PY{n}{f}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{)}\PY{p}{.}\PY{n}{p}\PY{p}{(}\PY{n+nb}{j}\PY{p}{)}\PY{p}{,}\PY{n}{M} \PY{o}{+}  \PY{l+m+mi}{1}\PY{p}{)} \PY{p}{=} \PY{n}{frente} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{;}
+        \PY{n}{Q} \PY{p}{=} \PY{p}{[}\PY{n}{Q} \PY{n}{individuo}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{n}{frente}\PY{p}{)}\PY{p}{.}\PY{n}{f}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{)}\PY{p}{.}\PY{n}{p}\PY{p}{(}\PY{n+nb}{j}\PY{p}{)}\PY{p}{]}\PY{p}{;}
+        \PY{k}{end}
+        \PY{k}{end}
+        \PY{k}{end}
+        \PY{k}{end}
+        \PY{c}{\PYZpc{}se pasa al siguiente frente}
+        \PY{n}{frente} \PY{p}{=}  \PY{n}{frente} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{;}
+        \PY{c}{\PYZpc{}Se actualiza el orden de los individuos según el frente auxiliar Q}
+        \PY{n}{F}\PY{p}{(}\PY{n}{frente}\PY{p}{)}\PY{p}{.}\PY{n}{f} \PY{p}{=} \PY{n}{Q}\PY{p}{;}
+        \PY{k}{end}
+        \PY{c}{\PYZpc{} se extrae el orden de los individuos en la varialbe de funciones objetivo}
+        \PY{p}{[}\PY{o}{\PYZti{}}\PY{p}{,}\PY{n}{indice\PYZus{}frentes}\PY{p}{]} \PY{p}{=} \PY{n}{sort}\PY{p}{(}\PY{n}{x}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{M} \PY{o}{+}  \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} se organizan los individuso por cada frente}
+        \PY{k}{for} \PY{n+nb}{i} \PY{p}{=} \PY{l+m+mi}{1} \PY{p}{:} \PY{n+nb}{length}\PY{p}{(}\PY{n}{indice\PYZus{}frentes}\PY{p}{)}
+        \PY{n}{organizado\PYZus{}por\PYZus{}frentes}\PY{p}{(}\PY{n+nb}{i}\PY{p}{,}\PY{p}{:}\PY{p}{)} \PY{p}{=} \PY{n}{x}\PY{p}{(}\PY{n}{indice\PYZus{}frentes}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+\end{Verbatim}
+
+
+    \hypertarget{cuxe1lculo-de-la-distancia-de-apilamiento}{%
+\subsubsection{Cálculo de la distancia de
+apilamiento}\label{cuxe1lculo-de-la-distancia-de-apilamiento}}
+
+Se calcula la distancia de apilamiento, para ello se evalúa cada frente
+teniendo en cuenta las funciones objetivo, reorganizando la población en
+cada frente para asignarle a los valores extremos (máximo y mínimo de
+cada individuo en la función objetivo el valor de infinito),
+posteriormente se organizan los individuos según su distancia.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c}{\PYZpc{} se crea un contador}
+        \PY{n}{indice\PYZus{}actual} \PY{p}{=} \PY{l+m+mi}{0}\PY{p}{;}
+        \PY{c}{\PYZpc{} para todos los frentes menos el último (el cual está vacio por defecto)}
+        \PY{k}{for} \PY{n}{frente} \PY{p}{=} \PY{l+m+mi}{1} \PY{p}{:} \PY{p}{(}\PY{n+nb}{length}\PY{p}{(}\PY{n}{F}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{)}
+        \PY{c}{\PYZpc{}se crea una variable de distancia}
+        \PY{n}{distancia} \PY{p}{=} \PY{l+m+mi}{0}\PY{p}{;}
+        \PY{c}{\PYZpc{}se crea una variable auxiliar para almacenar la distancia de}
+        \PY{c}{\PYZpc{}apilamiento en cada frente}
+        \PY{n}{y} \PY{p}{=} \PY{p}{[}\PY{p}{]}\PY{p}{;}
+        \PY{c}{\PYZpc{}     se crean dos contadores de índices para comparar los individuos}
+        \PY{n}{indice\PYZus{}previo} \PY{p}{=} \PY{n}{indice\PYZus{}actual} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{;}
+        \PY{c}{\PYZpc{}para todos los individuos que comparten frente}
+        \PY{k}{for} \PY{n+nb}{i} \PY{p}{=} \PY{l+m+mi}{1} \PY{p}{:} \PY{n+nb}{length}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{n}{frente}\PY{p}{)}\PY{p}{.}\PY{n}{f}\PY{p}{)}
+        \PY{c}{\PYZpc{}se actualizan los individuos en la variable auziliar}
+        \PY{n}{y}\PY{p}{(}\PY{n+nb}{i}\PY{p}{,}\PY{p}{:}\PY{p}{)} \PY{p}{=} \PY{n}{organizado\PYZus{}por\PYZus{}frentes}\PY{p}{(}\PY{n}{indice\PYZus{}actual} \PY{o}{+} \PY{n+nb}{i}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{c}{\PYZpc{}se actualizan los contadores}
+        \PY{n}{indice\PYZus{}actual} \PY{p}{=} \PY{n}{indice\PYZus{}actual} \PY{o}{+} \PY{n+nb}{i}\PY{p}{;}
+        \PY{c}{\PYZpc{}como se van a organizar por cada función objetivo, se crea una}
+        \PY{c}{\PYZpc{}variable auxiliar}
+        \PY{n}{organizado\PYZus{}por\PYZus{}objetivos} \PY{p}{=} \PY{p}{[}\PY{p}{]}\PY{p}{;}
+        \PY{c}{\PYZpc{}se recorren todos los objetivos}
+        \PY{k}{for} \PY{n+nb}{i} \PY{p}{=} \PY{l+m+mi}{1} \PY{p}{:} \PY{n}{M}
+        \PY{c}{\PYZpc{}se extrae la organización de los individuos que pertenecen a cada}
+        \PY{c}{\PYZpc{} frente, según su valor en la función objetivo M}
+        \PY{p}{[}\PY{n}{organizado\PYZus{}por\PYZus{}objetivos}\PY{p}{,} \PY{n}{indice\PYZus{}de\PYZus{}objetivos}\PY{p}{]} \PY{p}{=} \PY{n}{sort}\PY{p}{(}\PY{n}{y}\PY{p}{(}\PY{p}{:}\PY{p}{,} \PY{n+nb}{i}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}         se borra el contenido de la variable auxiliar}
+        \PY{n}{organizado\PYZus{}por\PYZus{}objetivos} \PY{p}{=} \PY{p}{[}\PY{p}{]}\PY{p}{;}
+        \PY{c}{\PYZpc{}para todos los individuos que se están comparando}
+        \PY{k}{for} \PY{n+nb}{j} \PY{p}{=} \PY{l+m+mi}{1} \PY{p}{:} \PY{n+nb}{length}\PY{p}{(}\PY{n}{indice\PYZus{}de\PYZus{}objetivos}\PY{p}{)}
+        \PY{c}{\PYZpc{}             se almacena el orden}
+        \PY{n}{organizado\PYZus{}por\PYZus{}objetivos}\PY{p}{(}\PY{n+nb}{j}\PY{p}{,}\PY{p}{:}\PY{p}{)} \PY{p}{=} \PY{n}{y}\PY{p}{(}\PY{n}{indice\PYZus{}de\PYZus{}objetivos}\PY{p}{(}\PY{n+nb}{j}\PY{p}{)}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{c}{\PYZpc{}se calcula el valor máximo de la función objetivo obtenido por}
+        \PY{c}{\PYZpc{}algún individuo en el frente bajo estudio}
+        \PY{n}{f\PYZus{}max} \PY{p}{=} \PY{n}{organizado\PYZus{}por\PYZus{}objetivos}\PY{p}{(}\PY{n+nb}{length}\PY{p}{(}\PY{n}{indice\PYZus{}de\PYZus{}objetivos}\PY{p}{)}\PY{p}{,}  \PY{n+nb}{i}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}se calcula el valor mínimo de la función objetivo obtenido por}
+        \PY{c}{\PYZpc{}algún individuo en el frente bajo estudio}
+        \PY{n}{f\PYZus{}min} \PY{p}{=} \PY{n}{organizado\PYZus{}por\PYZus{}objetivos}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}  \PY{n+nb}{i}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}se iguala a infinito los valores de distancia de los individuos}
+        \PY{c}{\PYZpc{}extremos}
+        \PY{n}{y}\PY{p}{(}\PY{n}{indice\PYZus{}de\PYZus{}objetivos}\PY{p}{(}\PY{n+nb}{length}\PY{p}{(}\PY{n}{indice\PYZus{}de\PYZus{}objetivos}\PY{p}{)}\PY{p}{)}\PY{p}{,}\PY{n}{M} \PY{o}{+}  \PY{l+m+mi}{1} \PY{o}{+} \PY{n+nb}{i}\PY{p}{)}\PY{p}{=} \PY{n}{Inf}\PY{p}{;}
+        \PY{n}{y}\PY{p}{(}\PY{n}{indice\PYZus{}de\PYZus{}objetivos}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}\PY{n}{M} \PY{o}{+}  \PY{l+m+mi}{1} \PY{o}{+} \PY{n+nb}{i}\PY{p}{)} \PY{p}{=} \PY{n}{Inf}\PY{p}{;}
+        \PY{c}{\PYZpc{}se calcula la distancia para todos los individuos que estén en el}
+        \PY{c}{\PYZpc{}frente, menos aquellos que pertenecen a los extremos}
+        \PY{k}{for} \PY{n+nb}{j} \PY{p}{=} \PY{l+m+mi}{2} \PY{p}{:} \PY{n+nb}{length}\PY{p}{(}\PY{n}{indice\PYZus{}de\PYZus{}objetivos}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+        \PY{n}{objetivo\PYZus{}siguiente}  \PY{p}{=} \PY{n}{organizado\PYZus{}por\PYZus{}objetivos}\PY{p}{(}\PY{n+nb}{j} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb}{i}\PY{p}{)}\PY{p}{;}
+        \PY{n}{objetivo\PYZus{}previo}  \PY{p}{=} \PY{n}{organizado\PYZus{}por\PYZus{}objetivos}\PY{p}{(}\PY{n+nb}{j} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb}{i}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}si los valores de la función objetivo es igual a cero, se le}
+        \PY{c}{\PYZpc{}asigna una distancia igual a infinito}
+        \PY{k}{if} \PY{p}{(}\PY{n}{f\PYZus{}max} \PY{o}{\PYZhy{}} \PY{n}{f\PYZus{}min} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{)}
+        \PY{n}{y}\PY{p}{(}\PY{n}{indice\PYZus{}de\PYZus{}objetivos}\PY{p}{(}\PY{n+nb}{j}\PY{p}{)}\PY{p}{,}\PY{n}{M} \PY{o}{+}  \PY{l+m+mi}{1} \PY{o}{+} \PY{n+nb}{i}\PY{p}{)} \PY{p}{=} \PY{n}{Inf}\PY{p}{;}
+        \PY{c}{\PYZpc{}si el valor de la función objetivo es diferente, se calcula}
+        \PY{c}{\PYZpc{}la distancia de apilamiento}
+        \PY{k}{else}
+        \PY{n}{y}\PY{p}{(}\PY{n}{indice\PYZus{}de\PYZus{}objetivos}\PY{p}{(}\PY{n+nb}{j}\PY{p}{)}\PY{p}{,}\PY{n}{M} \PY{o}{+}  \PY{l+m+mi}{1} \PY{o}{+} \PY{n+nb}{i}\PY{p}{)} \PY{p}{=} \PY{c}{...}
+        \PY{p}{(}\PY{n}{objetivo\PYZus{}siguiente} \PY{o}{\PYZhy{}} \PY{n}{objetivo\PYZus{}previo}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{f\PYZus{}max} \PY{o}{\PYZhy{}} \PY{n}{f\PYZus{}min}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{k}{end}
+        \PY{k}{end}
+        \PY{c}{\PYZpc{}se reinicia el valor de distancia}
+        \PY{n}{distancia} \PY{p}{=} \PY{p}{[}\PY{p}{]}\PY{p}{;}
+        \PY{c}{\PYZpc{}se asigna dimensión a la variable distancia, según la cantidad de}
+        \PY{c}{\PYZpc{}individuos en el frente}
+        \PY{n}{distancia}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)} \PY{p}{=} \PY{n+nb}{zeros}\PY{p}{(}\PY{n+nb}{length}\PY{p}{(}\PY{n}{F}\PY{p}{(}\PY{n}{frente}\PY{p}{)}\PY{p}{.}\PY{n}{f}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}se le asigna el valor de distancia según cada objetivo al vector}
+        \PY{c}{\PYZpc{}creado}
+        \PY{k}{for} \PY{n+nb}{i} \PY{p}{=} \PY{l+m+mi}{1} \PY{p}{:} \PY{n}{M}
+        \PY{n}{distancia}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)} \PY{p}{=} \PY{n}{distancia}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{+} \PY{n}{y}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{M} \PY{o}{+}  \PY{l+m+mi}{1} \PY{o}{+} \PY{n+nb}{i}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{c}{\PYZpc{}se actualiza en la variable y el valor de la distancia}
+        \PY{n}{y}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{M} \PY{o}{+}  \PY{l+m+mi}{2}\PY{p}{)} \PY{p}{=} \PY{n}{distancia}\PY{p}{;}
+        \PY{n}{y} \PY{p}{=} \PY{n}{y}\PY{p}{(}\PY{p}{:}\PY{p}{,} \PY{n}{M} \PY{o}{+}  \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}se almacena el valor de distancia en la variable z, la cual contempla}
+        \PY{c}{\PYZpc{}todos los frentes}
+        \PY{n}{z}\PY{p}{(}\PY{n}{indice\PYZus{}previo}\PY{p}{:}\PY{n}{indice\PYZus{}actual}\PY{p}{,}\PY{p}{:}\PY{p}{)} \PY{p}{=} \PY{n}{y}\PY{p}{;}
+        \PY{k}{end}
+        \PY{n}{OP\PYZus{}criterio\PYZus{}evaluacion}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{=}\PY{n}{x}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{p}{;}
+        \PY{n}{OP\PYZus{}criterio\PYZus{}evaluacion}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{=}\PY{n}{z}\PY{p}{(}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{p}{;}
+        \PY{c}{\PYZpc{}===========================================================================}
+        \PY{k}{end}
+\end{Verbatim}
+
+
+    \hypertarget{algortimo-para-seleccionar-el-conjunto-de-padres-seleccion_por_torneo.m}{%
+\subsection{Algortimo para seleccionar el conjunto de Padres
+(seleccion\_por\_torneo.m)}\label{algortimo-para-seleccionar-el-conjunto-de-padres-seleccion_por_torneo.m}}
+
+La selección de los padres de hace de manera aleatoria a partir del
+conjunto total de soluciones (variable denominada `Cromosomas'), cada
+par de padres se enfrenta teniendo en cuenta dos parámetros: 1) el valor
+del frente a cual pertenece cada individuo, seleccionando el individuo
+de menor frente y, 2) el valor de la distancia de apilamiento, en caso
+de pertenecer al mismo frente, como criterio de selección está el
+individuo con mayor valor de distancia.
+
+las variables de entrada son ST\_Cromosomas (Soluciones a competir),
+ST\_Matriz\_objetivos (Funciones de ajuste), ST\_criterio\_evaluacion
+(la primera fila corresponde al frente al cual pertenece cada solución y
+la segunda fila la distancia de apilamiento de la solución en su
+respectivo frente), ST\_pool (cantidad de grupos a enfrentarse) y
+ST\_torneo (cantidad de contrincantes). Como variables de salida la
+función genera: ST\_Cromosomas\_padres (Soluciones seleccionadas como
+ganadoras del torneo), ST\_criterio\_evaluacion\_padres (los respectivos
+valores de frente y distancia de apilamiento de las soluciones
+seleccionadas) y ST\_Matriz\_objetivos\_padres (matriz de soluciones de
+ajuste).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{function}\PY{err}{ }\PY{err}{[}\PY{n+nf}{ST\PYZus{}Cromosomas\PYZus{}padres}\PY{p}{,}\PY{n}{ST\PYZus{}criterio\PYZus{}evaluacion\PYZus{}padres}\PY{p}{,}\PY{c}{...}
+        \PY{n}{ST\PYZus{}Matriz\PYZus{}objetivos\PYZus{}padres}\PY{p}{]} \PY{p}{=} \PY{n}{seleccion\PYZus{}por\PYZus{}torneo}\PY{p}{(} \PY{n}{ST\PYZus{}Cromosomas}\PY{p}{,} \PY{c}{...}
+        \PY{n}{ST\PYZus{}Matriz\PYZus{}objetivos}\PY{p}{,} \PY{n}{ST\PYZus{}criterio\PYZus{}evaluacion}\PY{p}{,} \PY{n}{ST\PYZus{}pool}\PY{p}{,} \PY{n}{ST\PYZus{}torneo} \PY{p}{)}
+        \PY{c}{\PYZpc{} Se calcula la cantidad de cromosomas a evaluar}
+        \PY{p}{[}\PY{o}{\PYZti{}}\PY{p}{,} \PY{n}{cant\PYZus{}cromosomas}\PY{p}{]}\PY{p}{=}\PY{n+nb}{size}\PY{p}{(}\PY{n}{ST\PYZus{}Cromosomas}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se calcula la cantidad de individuos}
+        \PY{p}{[}\PY{n}{variables}\PY{p}{,} \PY{n}{poblacion}\PY{p}{]} \PY{p}{=} \PY{n+nb}{size}\PY{p}{(}\PY{n}{ST\PYZus{}criterio\PYZus{}evaluacion}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se almacena la cantidad de individuos en una variable auxiliar}
+        \PY{n}{Poblacion\PYZus{}total}\PY{p}{=}\PY{n}{poblacion}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se computa la cantidad de lotes del problema}
+        \PY{n}{cant\PYZus{}lotes}\PY{p}{=}\PY{n}{cant\PYZus{}cromosomas}\PY{o}{/}\PY{n}{poblacion}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se crea un vector auxiliar para determinar cuáles miembros son seleccionados:}
+        \PY{n}{poblacion}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{poblacion}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se almacena el frente al que pertenece cada solución en la variable rango}
+        \PY{n}{rango} \PY{p}{=} \PY{n}{ST\PYZus{}criterio\PYZus{}evaluacion}\PY{p}{(}\PY{n}{variables} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se almacena el valor de distancia de cada solución en la variable}
+        \PY{c}{\PYZpc{} distancia}
+        \PY{n}{distancia} \PY{p}{=} \PY{n}{ST\PYZus{}criterio\PYZus{}evaluacion}\PY{p}{(}\PY{n}{variables}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se genera un contador con todos la cantidad de combates o enfrentamientos}
+        \PY{k}{for} \PY{n+nb}{i} \PY{p}{=} \PY{l+m+mi}{1} \PY{p}{:} \PY{n}{ST\PYZus{}pool}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{Como a medida que pasan los enfrentamientos la cantidad de individuos}
+        \PY{c+cm}{disminuye, se crea una condición de selección, la cual sólo aplica luego}
+        \PY{c+cm}{del primer enfrentamiento.}
+        \PY{c+cm}{para el primer enfrentamiento}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}
+        \PY{k}{if} \PY{n+nb}{i}\PY{o}{==}\PY{l+m+mi}{1}
+        \PY{c}{\PYZpc{}seleccione los contrincantes}
+        \PY{n}{combatientes}\PY{p}{=}\PY{n}{datasample}\PY{p}{(}\PY{n}{poblacion}\PY{p}{,}\PY{n}{ST\PYZus{}torneo}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{Replace\PYZsq{}}\PY{p}{,}\PY{n}{false}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}         almacene el valor del frente}
+        \PY{n}{rango}\PY{p}{=}\PY{n}{ST\PYZus{}criterio\PYZus{}evaluacion}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{combatientes}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}almacene el valor de la distancia}
+        \PY{n}{distancia}\PY{p}{=}\PY{n}{ST\PYZus{}criterio\PYZus{}evaluacion}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{combatientes}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Para el resto de enfrentamientos}
+        \PY{k}{else}
+        \PY{c}{\PYZpc{}Seleccione los contrincantes que no han sido seleccionado}
+        \PY{c}{\PYZpc{}anteriormente}
+        \PY{n}{combatientes}\PY{p}{=}\PY{n}{datasample}\PY{p}{(}\PY{n}{poblacion}\PY{p}{(}\PY{n}{poblacion}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,}\PY{n}{ST\PYZus{}torneo}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{Replace\PYZsq{}}\PY{p}{,}\PY{n}{false}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}almacene el valor del frente}
+        \PY{n}{rango}\PY{p}{=}\PY{n}{ST\PYZus{}criterio\PYZus{}evaluacion}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{combatientes}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}almacene el valor de la distancia}
+        \PY{n}{distancia}\PY{p}{=}\PY{n}{ST\PYZus{}criterio\PYZus{}evaluacion}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{combatientes}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{c}{\PYZpc{} Seleccione el candidato con el menor rango}
+        \PY{n}{min\PYZus{}candidato} \PY{p}{=} \PY{n+nb}{find}\PY{p}{(}\PY{n}{rango} \PY{o}{==} \PY{n}{min}\PY{p}{(}\PY{n}{rango}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{Como es posible que los dos contrincantes pertenezcan al mismo rango, el}
+        \PY{c+cm}{valor de miembros de \PYZsq{}min\PYZus{}candidato\PYZsq{} puede ser mayor de 1, pro tanto:}
+        \PY{c+cm}{si hay más de una solución:}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}
+        \PY{k}{if} \PY{n+nb}{length}\PY{p}{(}\PY{n}{min\PYZus{}candidato}\PY{p}{)} \PY{o}{\PYZti{}=} \PY{l+m+mi}{1}
+        \PY{c}{\PYZpc{}seleccione el candidato con la mayor distancia}
+        \PY{n}{max\PYZus{}candidato} \PY{p}{=} \PY{n+nb}{find}\PY{p}{(}\PY{n}{distancia}\PY{p}{(}\PY{n}{min\PYZus{}candidato}\PY{p}{)} \PY{o}{==} \PY{n}{max}\PY{p}{(}\PY{n}{distancia}\PY{p}{(}\PY{n}{min\PYZus{}candidato}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} si los dos sujetos tienen la misma distnacia, seleccione cualquiera (por}
+        \PY{c}{\PYZpc{} defecto, el primero)}
+        \PY{k}{if} \PY{n+nb}{length}\PY{p}{(}\PY{n}{max\PYZus{}candidato}\PY{p}{)} \PY{o}{\PYZti{}=} \PY{l+m+mi}{1}
+        \PY{n}{max\PYZus{}candidato} \PY{p}{=} \PY{n}{max\PYZus{}candidato}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{c}{\PYZpc{} Se selecciona el valor de la solución y se almacena el la variable de}
+        \PY{c}{\PYZpc{} salida}
+        \PY{n}{ST\PYZus{}Matriz\PYZus{}objetivos\PYZus{}padres}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n+nb}{i}\PY{p}{)}\PY{p}{=}\PY{n}{ST\PYZus{}Matriz\PYZus{}objetivos}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{c}{...}
+        \PY{n}{combatientes}\PY{p}{(}\PY{n}{min\PYZus{}candidato}\PY{p}{(}\PY{n}{max\PYZus{}candidato}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se almacenan los correspondientes criteros de evaluación (valor de frente}
+        \PY{c}{\PYZpc{} y distancia)}
+        \PY{n}{ST\PYZus{}criterio\PYZus{}evaluacion\PYZus{}padres}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n+nb}{i}\PY{p}{)}\PY{p}{=}\PY{n}{ST\PYZus{}criterio\PYZus{}evaluacion}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{c}{...}
+        \PY{n}{combatientes}\PY{p}{(}\PY{n}{min\PYZus{}candidato}\PY{p}{(}\PY{n}{max\PYZus{}candidato}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se almacena la solución en la nueva variable de cromosomas}
+        \PY{n}{ST\PYZus{}Cromosomas\PYZus{}padres}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{p}{(}\PY{n+nb}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{cant\PYZus{}lotes}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n+nb}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{cant\PYZus{}lotes}\PY{o}{+}\PY{n}{cant\PYZus{}lotes}\PY{p}{)} \PY{p}{=} \PY{c}{...}
+        \PY{n}{ST\PYZus{}Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{p}{(}\PY{p}{(}\PY{n}{combatientes}\PY{p}{(}\PY{n}{min\PYZus{}candidato}\PY{p}{(}\PY{n}{max\PYZus{}candidato}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{c}{...}
+        \PY{n}{cant\PYZus{}lotes}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{p}{(}\PY{n}{combatientes}\PY{p}{(}\PY{n}{min\PYZus{}candidato}\PY{p}{(}\PY{n}{max\PYZus{}candidato}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{cant\PYZus{}lotes}\PY{o}{+}\PY{n}{cant\PYZus{}lotes}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}se elimina el ganador del pool}
+        \PY{n}{poblacion}\PY{p}{(}\PY{n}{combatientes}\PY{p}{(}\PY{n}{min\PYZus{}candidato}\PY{p}{(}\PY{n}{max\PYZus{}candidato}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{l+m+mi}{0}\PY{p}{;}
+        \PY{c}{\PYZpc{} Sí sólo existe un único contrincante por frente:}
+        \PY{k}{else}
+        \PY{c}{\PYZpc{} Se selecciona el valor de la solución y se almacena el la variable de}
+        \PY{c}{\PYZpc{} salida}
+        \PY{n}{ST\PYZus{}Matriz\PYZus{}objetivos\PYZus{}padres}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n+nb}{i}\PY{p}{)}\PY{p}{=}\PY{n}{ST\PYZus{}Matriz\PYZus{}objetivos}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{combatientes}\PY{p}{(}\PY{n}{min\PYZus{}candidato}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se almacenan los correspondientes criteros de evaluación (valor de frente}
+        \PY{c}{\PYZpc{} y distancia)}
+        \PY{n}{ST\PYZus{}criterio\PYZus{}evaluacion\PYZus{}padres}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n+nb}{i}\PY{p}{)}\PY{p}{=}\PY{n}{ST\PYZus{}criterio\PYZus{}evaluacion}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{c}{...}
+        \PY{n}{combatientes}\PY{p}{(}\PY{n}{min\PYZus{}candidato}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{p}{(}\PY{p}{(}\PY{n}{combatientes}\PY{p}{(}\PY{n}{min\PYZus{}candidato}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{cant\PYZus{}lotes}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{p}{(}\PY{n}{combatientes}\PY{p}{(}\PY{n}{min\PYZus{}candidato}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{c}{...}
+        \PY{o}{*}\PY{n}{cant\PYZus{}lotes}\PY{o}{+}\PY{n}{cant\PYZus{}lotes}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se almacena la solución en la nueva variable de cromosomas}
+        \PY{n}{ST\PYZus{}Cromosomas\PYZus{}padres}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{p}{(}\PY{n+nb}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{cant\PYZus{}lotes}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n+nb}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{cant\PYZus{}lotes}\PY{o}{+}\PY{n}{cant\PYZus{}lotes}\PY{p}{)} \PY{p}{=} \PY{c}{...}
+        \PY{n}{ST\PYZus{}Cromosomas}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{p}{(}\PY{p}{(}\PY{n}{combatientes}\PY{p}{(}\PY{n}{min\PYZus{}candidato}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{cant\PYZus{}lotes}\PY{o}{+}\PY{l+m+mf}{1.}\PY{p}{.}\PY{p}{.}
+        \PY{p}{:}\PY{p}{(}\PY{p}{(}\PY{n}{combatientes}\PY{p}{(}\PY{n}{min\PYZus{}candidato}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{cant\PYZus{}lotes}\PY{o}{+}\PY{n}{cant\PYZus{}lotes}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}         se elimina el ganador del pool}
+        \PY{n}{poblacion}\PY{p}{(}\PY{n}{combatientes}\PY{p}{(}\PY{n}{min\PYZus{}candidato}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{l+m+mi}{0}\PY{p}{;}
+        \PY{k}{end}
+        \PY{k}{end}
+        \PY{k}{end}
+\end{Verbatim}
+
+
+    \hypertarget{algortimo-para-crear-el-conjunto-de-hijos-operador_genetico.m}{%
+\subsection{Algortimo para crear el conjunto de Hijos
+(operador\_genetico.m)}\label{algortimo-para-crear-el-conjunto-de-hijos-operador_genetico.m}}
+
+La función `operador\_genetico' crea hijos a partir de los padres
+seleccionados, para ello existen dos posibildiades: 1) generar dos hijos
+a partir del cruce -en un único punto- entre dos padres. 2) la
+generación de 2 hijos a partir de la mutación en un segmento del
+cromosoma de ambos padres. la función genera la solución y el respectivo
+valor de las funciones de ajuste.
+
+Como el existe la posibilidad de generar nuevos segmentos del cromosoma
+(cuando se aplica la mutación), es necesario cargar las variables para
+generar los cromosomas. las variables de entrada del modelo son:
+OG\_cant\_objetivos (cantidad de objetivos a evaluar),
+OG\_cant\_periodos (tamaño del horizonte del planeación),
+OG\_cant\_lotes (cantidad de lotes a ser cultivados),
+OG\_Cromosomas\_padres(conjunto de soluciones ya pre seleccionads)
+OG\_probabilidad\_mutacion (Probabilidad de generar el hijo a partir de
+la mutación del padre), OG\_poblacion (tamaño de la población),
+OG\_cant\_productos (cantidad de productos a cultivar), OG\_Covkkp
+(covarianza entre los rendimientos o retornos económicos de cada
+producto), OG\_precio\_venta (Precio de venta de cada producto para cada
+semana), OG\_rendimiento (cantidad de kilogramos por metro cuadrado a
+recoger de cada producto), OG\_areas (tamaño en metros cuadrados de cada
+lote), OG\_demanda (Demanda de cada categoría de productos),
+OG\_familia\_botanica (Familia botánica a la que pertenece cada
+producto), OG\_familia\_venta (Categorías o familia de venta a la cual
+pertenece cada producto). y como variables de salida: Cromosomas\_hijos
+(conjunto de soluciones generadas a partir de las transformaciones
+genéticas) y objetivos\_hijos (valor de las funciones de ajuste para las
+soluciones creadas).
+
+Las variables de entrada son: poblacion cant\_objetivos cant\_periodos
+cant\_productos cant\_lotes precio\_venta rendimiento areas demanda
+familia\_botanica familia\_venta y Covkkp.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{function}\PY{err}{ }\PY{err}{[}\PY{n+nf}{Cromosomas\PYZus{}hijos}\PY{p}{,} \PY{n}{objetivos\PYZus{}hijos}\PY{p}{]} \PY{p}{=} \PY{c}{...}
+        \PY{n}{operador\PYZus{}genetico}\PY{p}{(} \PY{n}{OG\PYZus{}cant\PYZus{}objetivos}\PY{p}{,} \PY{n}{OG\PYZus{}cant\PYZus{}periodos}\PY{p}{,} \PY{c}{...}
+        \PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{p}{,}\PY{n}{OG\PYZus{}Cromosomas\PYZus{}padres}\PY{p}{,}\PY{n}{OG\PYZus{}probabilidad\PYZus{}mutacion}\PY{p}{,}\PY{c}{...}
+        \PY{n}{OG\PYZus{}poblacion}\PY{p}{,}\PY{n}{OG\PYZus{}cant\PYZus{}productos}\PY{p}{,}\PY{n}{OG\PYZus{}Covkkp}\PY{p}{,}\PY{n}{OG\PYZus{}precio\PYZus{}venta}\PY{p}{,}\PY{c}{...}
+        \PY{n}{OG\PYZus{}rendimiento}\PY{p}{,}\PY{n}{OG\PYZus{}areas}\PY{p}{,}\PY{n}{OG\PYZus{}demanda}\PY{p}{,}\PY{n}{OG\PYZus{}familia\PYZus{}botanica}\PY{p}{,}\PY{c}{...}
+        \PY{n}{OG\PYZus{}familia\PYZus{}venta}\PY{p}{)}
+        \PY{c}{\PYZpc{}Se calcula la cantidad de individuos en la población de padres}
+        \PY{p}{[}\PY{o}{\PYZti{}}\PY{p}{,}\PY{n}{N}\PY{p}{]} \PY{p}{=} \PY{n+nb}{size}\PY{p}{(}\PY{n}{OG\PYZus{}Cromosomas\PYZus{}padres}\PY{p}{)}\PY{p}{;}
+        \PY{n}{N}\PY{p}{=}\PY{n}{N}\PY{o}{/}\PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{p}{;}
+        \PY{c}{\PYZpc{}Se genera una variable auxiliar para almacenar el valor de las funciones}
+        \PY{c}{\PYZpc{}de ajuste de cada nuevo indidviduo}
+        \PY{n}{Matriz\PYZus{}objetivos}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{OG\PYZus{}cant\PYZus{}objetivos}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}Se cargan los parámetros}
+        \PY{n}{load}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{parametros\PYZus{}maduracion.mat\PYZsq{}}\PY{p}{)}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{PPP = Productos Por Periodo}
+        \PY{c+cm}{MTS = Matriz Tiempos Siembra}
+        \PY{c+cm}{MFS = Matriz Fecha Siembra}
+        \PY{c+cm}{PM  = Periodo de maduración}
+        \PY{c+cm}{PMS = Periodo de maduración en semanas}
+        \PY{c+cm}{para la prueba trabajaré con 5 sujetos}
+        \PY{c+cm}{Se genera un bucle para todos los padres}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}
+        \PY{k}{for} \PY{n+nb}{i} \PY{p}{=} \PY{l+m+mi}{1} \PY{p}{:} \PY{n}{N}
+        \PY{c}{\PYZpc{} Se determina si se aplica una mutación o cruce}
+        \PY{k}{if} \PY{n+nb}{rand}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{l+m+mi}{1}\PY{o}{\PYZhy{}} \PY{n}{OG\PYZus{}probabilidad\PYZus{}mutacion}
+        \PY{c}{\PYZpc{} Se crean los hivos (para el caso de cruce)}
+        \PY{n}{hijo\PYZus{}1} \PY{p}{=} \PY{p}{[}\PY{p}{]}\PY{p}{;}
+        \PY{n}{hijo\PYZus{}2} \PY{p}{=} \PY{p}{[}\PY{p}{]}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se seleccionan los padres}
+        \PY{n}{padres}\PY{p}{=}\PY{n}{datasample}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{N}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{Replace\PYZsq{}}\PY{p}{,}\PY{n}{false}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se utilzia la información (cromosomas) de cada padre}
+        \PY{n}{padre\PYZus{}1} \PY{p}{=} \PY{n}{OG\PYZus{}Cromosomas\PYZus{}padres}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{p}{(}\PY{n}{padres}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{c}{...}
+        \PY{p}{(}\PY{n}{padres}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{o}{+}\PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{p}{)}\PY{p}{;}
+        \PY{n}{padre\PYZus{}2} \PY{p}{=} \PY{n}{OG\PYZus{}Cromosomas\PYZus{}padres}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{p}{(}\PY{n}{padres}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{c}{...}
+        \PY{p}{(}\PY{n}{padres}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{o}{+}\PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se determina un punto de cruce, el cual es aleatorio entre 1 y la}
+        \PY{c}{\PYZpc{} cantidad de lotes \PYZhy{}1}
+        \PY{n}{punto\PYZus{}cruce}\PY{p}{=}\PY{n}{min}\PY{p}{(}\PY{n}{randi}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1} \PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}\PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se construyen los hijos con la información de los padres teniendo en}
+        \PY{c}{\PYZpc{} cuenta el punto de cruce}
+        \PY{n}{hijo\PYZus{}1}\PY{p}{=}\PY{n+nb}{cat}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{padre\PYZus{}1}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{punto\PYZus{}cruce}\PY{p}{)}\PY{p}{,}\PY{n}{padre\PYZus{}2}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{punto\PYZus{}cruce}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{n}{hijo\PYZus{}2}\PY{p}{=}\PY{n+nb}{cat}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{padre\PYZus{}2}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{punto\PYZus{}cruce}\PY{p}{)}\PY{p}{,}\PY{n}{padre\PYZus{}1}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{punto\PYZus{}cruce}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se declara el vector donde se almacena la función objetivo del hijo 1, y}
+        \PY{c}{\PYZpc{} se evalua utilziando la función \PYZsq{}Evaluar\PYZus{}individuos\PYZsq{}}
+        \PY{n}{objetivo\PYZus{}1}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{OG\PYZus{}cant\PYZus{}objetivos}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        
+        \PY{p}{[}\PY{n}{hijo\PYZus{}1}\PY{p}{,} \PY{n}{objetivo\PYZus{}1}\PY{p}{]}\PY{p}{=}\PY{n}{Evaluar\PYZus{}individuos}\PY{p}{(}\PY{n}{hijo\PYZus{}1}\PY{p}{,}\PY{n}{objetivo\PYZus{}1} \PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,}  \PY{c}{...}
+        \PY{n}{OG\PYZus{}cant\PYZus{}productos}\PY{p}{,} \PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{p}{,} \PY{n}{PMS}\PY{p}{,} \PY{n}{OG\PYZus{}Covkkp}\PY{p}{,} \PY{c}{...}
+        \PY{n}{OG\PYZus{}precio\PYZus{}venta}\PY{p}{,}\PY{n}{OG\PYZus{}rendimiento}\PY{p}{,} \PY{n}{OG\PYZus{}areas}\PY{p}{,} \PY{c}{...}
+        \PY{n}{OG\PYZus{}demanda}\PY{p}{,}\PY{n}{OG\PYZus{}familia\PYZus{}botanica}\PY{p}{,}\PY{n}{OG\PYZus{}familia\PYZus{}venta}\PY{p}{)}\PY{p}{;}
+        
+        \PY{c}{\PYZpc{} Se declara el vector donde se almacena la función objetivo del hijo 2, y}
+        \PY{c}{\PYZpc{} se evalua utilziando la función \PYZsq{}Evaluar\PYZus{}individuos\PYZsq{}}
+        \PY{n}{objetivo\PYZus{}2}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{OG\PYZus{}cant\PYZus{}objetivos}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        
+        \PY{p}{[}\PY{n}{hijo\PYZus{}2}\PY{p}{,} \PY{n}{objetivo\PYZus{}2}\PY{p}{]}\PY{p}{=}\PY{n}{Evaluar\PYZus{}individuos}\PY{p}{(}\PY{n}{hijo\PYZus{}2}\PY{p}{,}\PY{n}{objetivo\PYZus{}2} \PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,}  \PY{c}{...}
+        \PY{n}{OG\PYZus{}cant\PYZus{}productos}\PY{p}{,} \PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{p}{,} \PY{n}{PMS}\PY{p}{,} \PY{n}{OG\PYZus{}Covkkp}\PY{p}{,} \PY{c}{...}
+        \PY{n}{OG\PYZus{}precio\PYZus{}venta}\PY{p}{,}\PY{n}{OG\PYZus{}rendimiento}\PY{p}{,} \PY{n}{OG\PYZus{}areas}\PY{p}{,} \PY{c}{...}
+        \PY{n}{OG\PYZus{}demanda}\PY{p}{,}\PY{n}{OG\PYZus{}familia\PYZus{}botanica}\PY{p}{,}\PY{n}{OG\PYZus{}familia\PYZus{}venta}\PY{p}{)}\PY{p}{;}
+        
+        \PY{c}{\PYZpc{} Se concatena (almacena) la unformación de ambos hijos en forma de}
+        \PY{c}{\PYZpc{} cromosoma y su respectivo valor de función de ajuste}
+        \PY{c}{\PYZpc{} Cromosoma}
+        \PY{n}{hijos}\PY{p}{=}\PY{n+nb}{cat}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{hijo\PYZus{}1}\PY{p}{,}\PY{n}{hijo\PYZus{}2}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Valor de la función de ajuste}
+        \PY{n}{objetivos}\PY{p}{=}\PY{n+nb}{cat}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{objetivo\PYZus{}1}\PY{p}{,}\PY{n}{objetivo\PYZus{}2}\PY{p}{)}\PY{p}{;}
+        \PY{k}{else}
+        \PY{c}{\PYZpc{} Se declaran dos hijos vacios, para el caso de mutación}
+        \PY{n}{hijo\PYZus{}1} \PY{p}{=} \PY{p}{[}\PY{p}{]}\PY{p}{;}
+        \PY{n}{hijo\PYZus{}2} \PY{p}{=} \PY{p}{[}\PY{p}{]}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se seleccionan al azar dos padres}
+        \PY{n}{padres}\PY{p}{=}\PY{n}{datasample}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{N}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{Replace\PYZsq{}}\PY{p}{,}\PY{n}{false}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se utiliza la información (cromosomas) del padre 1}
+        \PY{n}{padre\PYZus{}1} \PY{p}{=} \PY{n}{OG\PYZus{}Cromosomas\PYZus{}padres}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{p}{(}\PY{n}{padres}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{c}{...}
+        \PY{p}{(}\PY{n}{padres}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{o}{+}\PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se iguala la información del padre a la del hijo}
+        \PY{n}{hijo\PYZus{}1}\PY{p}{=}\PY{n}{padre\PYZus{}1}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se identifica el punto (subcromosoma) donde se realizará la}
+        \PY{c}{\PYZpc{} mutación}
+        \PY{n}{punto\PYZus{}mutacion\PYZus{}1}\PY{p}{=}\PY{n}{randi}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1} \PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} un único individuo y un único lote}
+        
+        \PY{c}{\PYZpc{} Se genera la mutación utilizando una función}
+        \PY{n}{mutacion} \PY{p}{=} \PY{n}{crear\PYZus{}mutacion}\PY{p}{(} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{OG\PYZus{}cant\PYZus{}objetivos}\PY{p}{,} \PY{n}{OG\PYZus{}cant\PYZus{}periodos}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        
+        
+        \PY{c}{\PYZpc{} Se actualiza el cromosoma en la solución hijo}
+        \PY{n}{hijo\PYZus{}1}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{punto\PYZus{}mutacion\PYZus{}1}\PY{p}{)}\PY{p}{=}\PY{n}{mutacion}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se crea una variable para almacenar la solución del hijo 1}
+        \PY{n}{objetivo\PYZus{}1}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{OG\PYZus{}cant\PYZus{}objetivos}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        
+        \PY{c}{\PYZpc{} Se evalua la solución del hijo 1}
+        
+        \PY{p}{[}\PY{n}{hijo\PYZus{}1}\PY{p}{,} \PY{n}{objetivo\PYZus{}1}\PY{p}{]}\PY{p}{=}\PY{n}{Evaluar\PYZus{}individuos}\PY{p}{(}\PY{n}{hijo\PYZus{}1}\PY{p}{,}\PY{n}{objetivo\PYZus{}1} \PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,}  \PY{c}{...}
+        \PY{n}{OG\PYZus{}cant\PYZus{}productos}\PY{p}{,} \PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{p}{,} \PY{n}{PMS}\PY{p}{,} \PY{n}{OG\PYZus{}Covkkp}\PY{p}{,} \PY{c}{...}
+        \PY{n}{OG\PYZus{}precio\PYZus{}venta}\PY{p}{,}\PY{n}{OG\PYZus{}rendimiento}\PY{p}{,} \PY{n}{OG\PYZus{}areas}\PY{p}{,} \PY{n}{OG\PYZus{}demanda}\PY{p}{,}\PY{c}{...}
+        \PY{n}{OG\PYZus{}familia\PYZus{}botanica}\PY{p}{,}\PY{n}{OG\PYZus{}familia\PYZus{}venta}\PY{p}{)}\PY{p}{;}
+        
+        
+        \PY{c}{\PYZpc{} Se utiliza la información (cromosomas) del padre 2}
+        \PY{n}{padre\PYZus{}2} \PY{p}{=} \PY{n}{OG\PYZus{}Cromosomas\PYZus{}padres}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{p}{(}\PY{n}{padres}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{c}{...}
+        \PY{p}{(}\PY{n}{padres}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{o}{+}\PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se iguala la información del padre a la del hijo}
+        \PY{n}{hijo\PYZus{}2}\PY{p}{=}\PY{n}{padre\PYZus{}2}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se identifica el punto (subcromosoma) donde se realizará la}
+        \PY{c}{\PYZpc{} mutación}
+        \PY{n}{punto\PYZus{}mutacion\PYZus{}2}\PY{p}{=}\PY{n}{randi}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1} \PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{p}{]}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        
+        \PY{c}{\PYZpc{} Se genera la mutación utilizando una función}
+        
+        \PY{n}{mutacion} \PY{p}{=} \PY{n}{crear\PYZus{}mutacion}\PY{p}{(} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{OG\PYZus{}cant\PYZus{}objetivos}\PY{p}{,} \PY{n}{OG\PYZus{}cant\PYZus{}periodos}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        
+        \PY{c}{\PYZpc{} Se actualiza el cromosoma en la solución hijo}
+        \PY{n}{hijo\PYZus{}2}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{punto\PYZus{}mutacion\PYZus{}2}\PY{p}{)}\PY{p}{=}\PY{n}{mutacion}\PY{p}{;}
+        \PY{c}{\PYZpc{}         Se crea una variable para almacenar la solución del hijo 2}
+        \PY{n}{objetivo\PYZus{}2}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{OG\PYZus{}cant\PYZus{}objetivos}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        
+        \PY{c}{\PYZpc{} Se evalua la solución del hijo 2}
+        
+        \PY{p}{[}\PY{n}{hijo\PYZus{}2}\PY{p}{,} \PY{n}{objetivo\PYZus{}2}\PY{p}{]}\PY{p}{=}\PY{n}{Evaluar\PYZus{}individuos}\PY{p}{(}\PY{n}{hijo\PYZus{}2}\PY{p}{,}\PY{n}{objetivo\PYZus{}2} \PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,}  \PY{c}{...}
+        \PY{n}{OG\PYZus{}cant\PYZus{}productos}\PY{p}{,} \PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{p}{,} \PY{n}{PMS}\PY{p}{,} \PY{n}{OG\PYZus{}Covkkp}\PY{p}{,} \PY{n}{OG\PYZus{}precio\PYZus{}venta}\PY{p}{,}\PY{n}{OG\PYZus{}rendimiento}\PY{p}{,} \PY{n}{OG\PYZus{}areas}\PY{p}{,} \PY{c}{...}
+        \PY{n}{OG\PYZus{}demanda}\PY{p}{,}\PY{n}{OG\PYZus{}familia\PYZus{}botanica}\PY{p}{,}\PY{n}{OG\PYZus{}familia\PYZus{}venta}\PY{p}{)}\PY{p}{;}
+        
+        \PY{c}{\PYZpc{} Se concatena (almacena) la unformación de ambos hijos en forma de}
+        \PY{c}{\PYZpc{} cromosoma y su respectivo valor de función de ajuste}
+        \PY{c}{\PYZpc{} Cromosoma}
+        \PY{n}{hijos}\PY{p}{=}\PY{n+nb}{cat}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{hijo\PYZus{}1}\PY{p}{,}\PY{n}{hijo\PYZus{}2}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Valor de la función de ajuste}
+        \PY{n}{objetivos}\PY{p}{=}\PY{n+nb}{cat}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{objetivo\PYZus{}1}\PY{p}{,}\PY{n}{objetivo\PYZus{}2}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{c}{\PYZpc{} Se actualiza la información de la solución}
+        \PY{c}{\PYZpc{} solución}
+        \PY{n}{Cromosomas\PYZus{}hijos}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{p}{(}\PY{n+nb}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n+nb}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{+}\PY{n}{OG\PYZus{}cant\PYZus{}lotes}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{=}\PY{n}{hijos}\PY{p}{;}
+        \PY{c}{\PYZpc{}Valor de las funciones de ajuste}
+        \PY{n}{objetivos\PYZus{}hijos}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{p}{(}\PY{n+nb}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n+nb}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{+}\PY{l+m+mi}{2}\PY{p}{)} \PY{p}{=}\PY{n}{objetivos}\PY{p}{;}
+        \PY{k}{end}
+        \PY{k}{end}
+\end{Verbatim}
+
+
+    \hypertarget{algortimo-para-crear-la-mutaciuxf3n-crear_mutacion.m}{%
+\subsection{Algortimo para crear la mutación
+(crear\_mutacion.m)}\label{algortimo-para-crear-la-mutaciuxf3n-crear_mutacion.m}}
+
+Se contruye una función denominada `crear-mutacion', la cual en escencia
+está estructurada como la función \% -inicializar-cromosomas' pero
+enfocada en un único lote. Los parámetros de entrada son CM\_poblacion
+(población, la cual en este caso es un único individuo),
+CM\_cant\_objetivos (cantidad de objetivos a evaluar),
+CM\_cant\_periodos (la cantidad de periodos del horizonte de planeación)
+y CM\_cant\_lotes (cantidad de lotes a crear, en este caso, un único
+lote). Como salida la función presenta un único cromosoma denominado:
+`CM\_Cromosoma'.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{function}\PY{err}{ }\PY{err}{[} \PY{n+nf}{CM\PYZus{}Cromosoma} \PY{p}{]} \PY{p}{=} \PY{n}{crear\PYZus{}mutacion}\PY{p}{(} \PY{n}{CM\PYZus{}poblacion}\PY{p}{,}\PY{c}{...}
+        \PY{n}{CM\PYZus{}cant\PYZus{}objetivos}\PY{p}{,} \PY{n}{CM\PYZus{}cant\PYZus{}periodos}\PY{p}{,} \PY{n}{CM\PYZus{}cant\PYZus{}lotes}\PY{p}{)}
+        \PY{c}{\PYZpc{}Se cargan los parámetros}
+        \PY{n}{load}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{parametros\PYZus{}maduracion.mat\PYZsq{}}\PY{p}{)}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{PPP = Productos Por Periodo}
+        \PY{c+cm}{MTS = Matriz Tiempos Siembra}
+        \PY{c+cm}{MFS = Matriz Fecha Siembra}
+        \PY{c+cm}{PM  = Periodo de maduración}
+        \PY{c+cm}{PMS = Periodo de maduración en semanas}
+        \PY{c+cm}{para la prueba trabajaré con 5 sujetos}
+        \PY{c+cm}{Cálculo de variables y parámetros}
+        \PY{c+cm}{Duración del proyecto}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}
+        \PY{n}{T}\PY{p}{=}\PY{n}{CM\PYZus{}cant\PYZus{}periodos}\PY{p}{;}
+        \PY{c}{\PYZpc{} Cantidad de Lotes}
+        \PY{n}{L}\PY{p}{=}\PY{n}{CM\PYZus{}cant\PYZus{}lotes}\PY{p}{;}
+        \PY{c}{\PYZpc{} Cantidad de cromosomas}
+        \PY{n}{C}\PY{p}{=}\PY{n}{CM\PYZus{}poblacion}\PY{p}{;}
+        \PY{c}{\PYZpc{} Contador para los bucles}
+        \PY{n}{CONTADOR}\PY{p}{=}\PY{l+m+mi}{0}\PY{p}{;}
+        \PY{c}{\PYZpc{} Se contruye la matriz donde se almacenarán la función de ajuste, seguida}
+        \PY{c}{\PYZpc{} de las funciones objetivo}
+        \PY{n}{Matriz\PYZus{}objetivos}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{CM\PYZus{}cant\PYZus{}objetivos}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{CM\PYZus{}poblacion}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}\PYZpc{}}
+        \PY{c}{\PYZpc{} Creación del cromosoma}
+        \PY{n}{CM\PYZus{}Cromosoma}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{L}\PY{o}{*}\PY{n}{C}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Contador de periodos del proyecto}
+        \PY{n}{CPP}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{T}\PY{p}{;}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{Bucle para asignar aleatoriamente los productos durante el horizonte de}
+        \PY{c+cm}{planeación}
+        \PY{c+cm}{Cromosomas auxiliares para llevar la asignación de tiempos y bloqueo de}
+        \PY{c+cm}{lotes}
+        \PY{c+cm}{Ayuda a organizar los productos en los diversos periodos}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}
+        \PY{n}{Cromosoma\PYZus{}aux1}\PY{p}{=}\PY{l+m+mi}{0}\PY{o}{*}\PY{n}{CM\PYZus{}Cromosoma}\PY{p}{;}
+        \PY{c}{\PYZpc{} Almacena el contador de meses en que dura ocupado cada terreno}
+        \PY{n}{Cromosoma\PYZus{}aux2}\PY{p}{=}\PY{n}{Cromosoma\PYZus{}aux1}\PY{p}{;}
+        \PY{c}{\PYZpc{} Ayuda a verificar condiciones del cromosoma}
+        \PY{n}{Cromosoma\PYZus{}aux3}\PY{p}{=}\PY{n}{Cromosoma\PYZus{}aux1}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{;}
+        \PY{c}{\PYZpc{} se realiza un bucle durante la duración del proyecto, por ahorro en}
+        \PY{c}{\PYZpc{} recursos computacionales, no se tiene en cuenta los tres últimos periodos}
+        \PY{c}{\PYZpc{} ya que ningún producto puede ser sembrado en ese instante:}
+        \PY{k}{for} \PY{n}{tiempo}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{T}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}
+        \PY{c}{\PYZpc{}Para cada periodo se asignan aletoriamente los 25 productos en L}
+        \PY{c}{\PYZpc{}lotes, siempre y cuando estos puedan ser sembrados en ese instante y}
+        \PY{c}{\PYZpc{}existan lotes disponibles}
+        \PY{n}{CM\PYZus{}Cromosoma}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{=} \PY{p}{(}\PY{n}{datasample}\PY{p}{(}\PY{n+nb}{find}\PY{p}{(}\PY{n}{MFS}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{tiempo}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,}\PY{n}{L}\PY{o}{*}\PY{n}{C}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{p}{)}\PY{c}{....}
+        \PY{o}{*}\PY{n}{Cromosoma\PYZus{}aux3}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{;}
+        \PY{n}{Cromosoma\PYZus{}aux1}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{=}\PY{n}{CM\PYZus{}Cromosoma}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}Determino un listado de los productos que pueden ser sembrados en cada}
+        \PY{c}{\PYZpc{}periodo}
+        \PY{n}{var\PYZus{}aux1}\PY{p}{=}\PY{n+nb}{find}\PY{p}{(}\PY{n}{MFS}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{tiempo}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{;}
+        \PY{k}{for} \PY{n}{listado}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{length}\PY{p}{(}\PY{n}{var\PYZus{}aux1}\PY{p}{)}
+        \PY{n}{Cromosoma\PYZus{}aux2}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)} \PY{p}{=} \PY{n}{Cromosoma\PYZus{}aux2}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{CM\PYZus{}Cromosoma}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{c}{...}
+        \PY{o}{==}\PY{n}{var\PYZus{}aux1}\PY{p}{(}\PY{n}{listado}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{n}{PM}\PY{p}{(}\PY{n}{var\PYZus{}aux1}\PY{p}{(}\PY{n}{listado}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{k}{while} \PY{n}{tiempo} \PY{o}{\PYZgt{}} \PY{l+m+mi}{1}
+        \PY{n}{Cromosoma\PYZus{}aux2}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)} \PY{p}{=} \PY{n}{Cromosoma\PYZus{}aux2}\PY{p}{(}\PY{n}{tiempo}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{p}{:}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{;}
+        \PY{n}{CM\PYZus{}Cromosoma}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{=}\PY{p}{(}\PY{n}{datasample}\PY{p}{(}\PY{n+nb}{find}\PY{p}{(}\PY{n}{MFS}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{tiempo}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{,}\PY{n}{L}\PY{o}{*}\PY{n}{C}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{p}{)}\PY{o}{.*}\PY{c}{...}
+        \PY{p}{(}\PY{n}{Cromosoma\PYZus{}aux2}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        \PY{n}{Cromosoma\PYZus{}aux1}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{=}\PY{n}{CM\PYZus{}Cromosoma}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Determino un listado de los productos que pueden ser sembrados en cada}
+        \PY{c}{\PYZpc{} periodo}
+        \PY{n}{var\PYZus{}aux1}\PY{p}{=}\PY{n+nb}{find}\PY{p}{(}\PY{n}{MFS}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{tiempo}\PY{p}{)}\PY{o}{\PYZti{}=}\PY{l+m+mi}{0}\PY{p}{)}\PY{p}{;}
+        \PY{k}{for} \PY{n}{listado}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{length}\PY{p}{(}\PY{n}{var\PYZus{}aux1}\PY{p}{)}
+        \PY{n}{Cromosoma\PYZus{}aux2}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)} \PY{p}{=} \PY{n}{Cromosoma\PYZus{}aux2}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{CM\PYZus{}Cromosoma}\PY{p}{(}\PY{n}{tiempo}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{o}{==}\PY{c}{...}
+        \PY{n}{var\PYZus{}aux1}\PY{p}{(}\PY{n}{listado}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{n}{PM}\PY{p}{(}\PY{n}{var\PYZus{}aux1}\PY{p}{(}\PY{n}{listado}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{k}{end}
+        \PY{k}{break}
+        \PY{k}{end}
+        \PY{k}{end}
+        \PY{k}{end}
+\end{Verbatim}
+
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
